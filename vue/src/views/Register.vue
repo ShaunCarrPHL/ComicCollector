@@ -5,6 +5,8 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <!--todo: Add a link to explain premium user feature-->
+      <input type="checkbox">Want To Be A Premium User?<br>
       <label for="username" class="sr-only">Username</label>
       <input
         type="text"
@@ -86,6 +88,9 @@ export default {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
+    premiumUser(){
+
+    }
   },
 };
 </script>
