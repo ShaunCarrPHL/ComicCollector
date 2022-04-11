@@ -8,8 +8,20 @@
       <router-link v-bind:to="{name: 'login'}"></router-link>
     </div>
     <router-view />
+    
   </div>
 </template>
+
+<script>
+
+export default {
+  components: {
+    
+  }
+}
+
+</script>
+
 
 <style scoped>
 div#h1{
@@ -19,10 +31,14 @@ div#h1{
   height: 15vh;
   padding-top: 10vh;
 }
-  div#app{
-    font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
-    background-color: rgb(20, 19, 19);
-    color: white;
-    height: 100vh;
-  }
+
+div#app{
+  font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
+  background-color: rgb(20, 19, 19);
+  color: white;
+  height: 100vh;
+}
+
+/* TODO: Change router-link colors to red/yellow */
+
 </style>
