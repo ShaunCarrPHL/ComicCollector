@@ -39,6 +39,10 @@ div#app{
   height: 100vh;
 }
 
+a{
+  color: yellow;
+}
+
 /* TODO: Change router-link colors to red/yellow */
 
 </style>

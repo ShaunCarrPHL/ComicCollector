@@ -95,4 +95,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+a{
+  color: yellow;
+}
+</style>

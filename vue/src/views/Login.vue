@@ -74,3 +74,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+a{
+  color: yellow;
+}
+</style>
