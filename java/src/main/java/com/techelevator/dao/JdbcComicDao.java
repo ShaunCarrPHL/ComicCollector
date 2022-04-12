@@ -54,7 +54,7 @@ public class JdbcComicDao implements ComicDao{
     }
 
     @Override
-    public Comic getComicByName(String comicName) {
+    public Comic getComicByTitle(String comicTitle) {
         return null;
     }
 
@@ -66,7 +66,7 @@ public class JdbcComicDao implements ComicDao{
     private Comic mapRowToComic(SqlRowSet rs) {
         Comic comic = new Comic();
         comic.setComicId(rs.getInt("comic_id"));
-        comic.setComicName(rs.getString("comic_name"));
+        comic.setComicTitle(rs.getString("comic_name"));
         comic.setImage(rs.getString("imageURL"));
         comic.setAuthor(rs.getString("author"));
         comic.setReleaseDate(rs.getDate("release_date"));

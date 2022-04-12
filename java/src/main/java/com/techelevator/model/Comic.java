@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Comic {
     private int comicId;
-    private String comicName;
+    private String comicTitle;
     private String author;
     private String imageURL;
     private Date releaseDate;
@@ -18,8 +18,8 @@ public class Comic {
         return comicId;
     }
 
-    public String getComicName() {
-        return comicName;
+    public String getComicTitle() {
+        return comicTitle;
     }
 
     public String getAuthor() {
@@ -47,8 +47,8 @@ public class Comic {
         this.comicId = comicId;
     }
 
-    public void setComicName(String comicName) {
-        this.comicName = comicName;
+    public void setComicTitle(String comicTitle) {
+        this.comicTitle = comicTitle;
     }
 
     public void setAuthor(String author) {
