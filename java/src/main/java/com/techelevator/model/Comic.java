@@ -6,9 +6,9 @@ public class Comic {
     private int comicId;
     private String comicName;
     private String author;
-    private String image;
+    private String imageURL;
     private Date releaseDate;
-    private int publisherId;
+    private int creatorId;
     private int seriesId;
 
 //constructor?
@@ -26,16 +26,16 @@ public class Comic {
         return author;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
     public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public int getPublisherId() {
-        return publisherId;
+    public int getCreatorId() {
+        return creatorId;
     }
 
     public int getSeriesId() {
@@ -55,16 +55,16 @@ public class Comic {
         this.author = author;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public void setPublisherId(int publisherId) {
-        this.publisherId = publisherId;
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
     }
 
     public void setSeriesId(int seriesId) {
