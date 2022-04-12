@@ -17,3 +17,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+div#home{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+</style>
