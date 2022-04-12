@@ -78,4 +78,9 @@ export default {
 a{
   color: yellow;
 }
+.text-center{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
 </style>

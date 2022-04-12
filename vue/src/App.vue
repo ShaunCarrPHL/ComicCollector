@@ -7,23 +7,29 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
-      </div>
-    <div id='h1'> A World Of Marvels
-      </div>
-      <div class="parent">
+    </div>
+      
+    <div id='h1'> A World Of Marvels</div>
+    <body class="body">
+    <div class="parent">
       <div class="sidebar">
-  <a class="active" href="#home">Home</a>
-  <a href="#collection">Collection</a>
-  <a href="#contact">Contact</a>
-  <a href="#search">Search</a>
-</div>
-<div id="component-view">
-
-</div>
-</div>
+        <a class="active" href="#home">Home</a>
+        <a href="#collection">Collection</a>
+        <a href="#contact">Contact</a>
+        <a href="#search">Search</a>
+      </div>
+    </div>
+    <div>
     <router-view />
-    
+    </div>
+
+    <div>
+      <footer class="footer">Data provided by Marvel. © 2014 Marvel</footer>
+    </div>
+
+    </body>
   </div>
+
 </template>
 
 <script>
@@ -38,6 +44,15 @@ export default {
 
 
 <style scoped>
+
+.body{
+  display: flex;
+}
+
+.footer{
+  flex-shrink: 0;
+}
+
 div#nav{
   color: yellow;
   font-size: 20px;
