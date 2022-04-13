@@ -20,7 +20,7 @@ public class ComicController {
     String privateKey = "26f65896d570b55683c0ae7e408acddd730e64bd";
     String publicKey = "f574334c33d7534733b1fb8eedd88f7e";
 
-    MarvelComicService marvelComicService = new MarvelComicService(Api_Base_URL, publicKey, privateKey);
+    MarvelComicService marvelComicService = new MarvelComicService(Api_Base_URL, timestamp, publicKey, privateKey);
 
     private ComicDao comicDao;
     private CollectionDao collectionDao;
@@ -43,7 +43,7 @@ public class ComicController {
 // turn hash byte array into a string
     String hash = Arrays.toString(theMD5Digest);
 
-    //"?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash
+    //"?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash // TODO where do you go?
 
    @RequestMapping(path = "/comics/{comicId}", method = RequestMethod.GET)
     public Comic getComicById(@PathVariable int comicId) {
