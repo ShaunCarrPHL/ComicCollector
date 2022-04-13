@@ -1,8 +1,9 @@
-package com.techelevator.model;
+package com.techelevator.model.MarvelModel;
 
 import java.util.Date;
 
-public class Comic {
+public class MarvelComic {
+
     private int comicId;
     private int marvelId;
     private String comicTitle;
@@ -12,9 +13,9 @@ public class Comic {
     private int creatorId;
     private int seriesId;
     private String description;
-    public Comic (){}
+    public MarvelComic (){}
 
-    public Comic(int comicId, String comicTitle, String author, String imageURL, Date releaseDate, int creatorId, int seriesId, String description) {
+    public MarvelComic(int comicId, String comicTitle, String author, String imageURL, Date releaseDate, int creatorId, int seriesId, String description) {
         this.comicId = comicId;
         this.marvelId = marvelId;
         this.comicTitle = comicTitle;
@@ -111,5 +112,3 @@ public class Comic {
 
     }
 }
-
-

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Component
-public class JdbcCharacterDao implements CharacterDao{
+public class JdbcCharacterDao implements CharacterDao {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -32,8 +32,8 @@ public class JdbcCharacterDao implements CharacterDao{
         String sql = "SELECT * FROM hero WHERE hero_name =?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
 
-        if(results.next()){
-            character = mapRowToCharacter(results);
+       if (results.next()) {
+           // character = mapRowToCharacter(results);
         }
 
         return character;
@@ -44,8 +44,8 @@ public class JdbcCharacterDao implements CharacterDao{
         return null;
     }
 
-    private Character mapRowToCharacter(SqlRowSet rs) {
-        Character character = new Character();
-        return character;
-    }
+    //private Character mapRowToCharacter(SqlRowSet rs) {
+    //Character character = new Character();
+    //return character;}
+
 }

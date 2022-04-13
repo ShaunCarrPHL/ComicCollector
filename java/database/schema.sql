@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS collection;
 DROP TABLE IF EXISTS comic_collection;
 DROP TABLE IF EXISTS hero;
 DROP TABLE IF EXISTS comic_hero;
-DROP TABLE IF EXISTS publisher;
+DROP TABLE IF EXISTS creator;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS series;
 
@@ -16,7 +16,7 @@ DROP SEQUENCE IF EXISTS seq_collection_id;
 DROP SEQUENCE IF EXISTS seq_comic_collection_id;
 DROP SEQUENCE IF EXISTS seq_hero_id;
 DROP SEQUENCE IF EXISTS seq_comic_hero_id;
-DROP SEQUENCE IF EXISTS seq_publisher_id;
+DROP SEQUENCE IF EXISTS seq_creator_id;
 DROP SEQUENCE IF EXISTS seq_account_id;
 DROP SEQUENCE IF EXISTS seq_series_id;
 
@@ -57,7 +57,7 @@ CREATE SEQUENCE seq_comic_hero_id
   NO MINVALUE
   CACHE 1;
   
-CREATE SEQUENCE seq_publisher_id
+CREATE SEQUENCE seq_creator_id
   INCREMENT BY 1
   NO MAXVALUE
   NO MINVALUE
@@ -96,10 +96,10 @@ CREATE TABLE hero (
 	CONSTRAINT PK_hero PRIMARY KEY (hero_id)
 );
 
-CREATE TABLE publisher (
-	publisher_id int DEFAULT nextval('seq_publisher_id'::regclass) NOT NULL,
+CREATE TABLE creator (
+	creator_id int DEFAULT nextval('seq_creator_id'::regclass) NOT NULL,
 	publisher_name varchar(75) NOT NULL,
-	CONSTRAINT PK_publisher PRIMARY KEY (publisher_id)
+	CONSTRAINT PK_creator PRIMARY KEY (creator_id)
 );
 
 CREATE TABLE series (
@@ -110,9 +110,9 @@ CREATE TABLE series (
 
 CREATE TABLE comic (
 	comic_id int DEFAULT nextval('seq_comic_id'::regclass) NOT NULL,
-	publisher_id int REFERENCES publisher (publisher_id),
+	creator_id int REFERENCES creator (creator_id),
 	series_id int REFERENCES series (series_id),
-	author varchar(100) NOT NULL,
+	marvel_id int NOT NULL,
 	image varchar(300) NOT NULL,
 	title varchar(50) NOT NULL,
 --	release_date date DEFAULT current_date,
