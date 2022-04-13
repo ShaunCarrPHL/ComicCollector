@@ -28,22 +28,14 @@ public class ComicController {
     private CharacterDao characterDao;
     private UserDao userDao;
 
-    public ComicController(ComicDao comicDao, CollectionDao collectionDao, SeriesDao seriesDao, CharacterDao characterDao, UserDao userDao) throws NoSuchAlgorithmException {
+    public ComicController(ComicDao comicDao, CollectionDao collectionDao, SeriesDao seriesDao, CharacterDao characterDao, UserDao userDao) {
         this.comicDao = comicDao;
         this.collectionDao = collectionDao;
         this.seriesDao = seriesDao;
         this.characterDao = characterDao;
         this.userDao = userDao;
     }
-// Get the hash combination ready
-    byte[] hashCombo = (timestamp + publicKey + privateKey).getBytes(StandardCharsets.UTF_8);
-// Use MD5 to digest hash
-    MessageDigest md = MessageDigest.getInstance("MD5");
-    byte[] theMD5Digest = md.digest(hashCombo);
-// turn hash byte array into a string
-    String hash = Arrays.toString(theMD5Digest);
 
-    //"?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash // TODO where do you go?
 
    @RequestMapping(path = "/comics/{comicId}", method = RequestMethod.GET)
     public Comic getComicById(@PathVariable int comicId) {
