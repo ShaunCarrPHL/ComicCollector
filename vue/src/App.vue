@@ -2,9 +2,9 @@
   <div id="app">
     
     <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+    <!--   <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-      <router-link v-bind:to="{name: 'login'}"></router-link>
+      <router-link v-bind:to="{name: 'login'}"></router-link> -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
@@ -14,14 +14,17 @@
       <div> A World Of Marvels </div>
     
       <div class="menu">
-        <a href="#home">Home</a>
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>
+          <router-link v-bind:to="{name: 'login'}"></router-link>
+         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-bind:to="{name: 'collection'}" v-if="$store.state.token != ''">Collection</router-link>
         <a href="#collection">Collection</a>
-        <a href="#contact">Contact</a>
+        <router-link v-bind:to="{name: 'contact'}">Contact</router-link>
         <a href="#search">Search</a>
       </div>
     </div>
     
-    <div id="content">
+    <div id="content" :style="{'background-image':'url(https://wallpaperaccess.com/full/430398.jpg)'}">
       <router-view />
     </div>
 
@@ -86,8 +89,9 @@ div#title{
   padding: 20px;
 }
 
-div#app{
- 
+/*Fix the grid area of app*/
+section#app{
+
   font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
   background-color: rgb(20, 19, 19); 
   color: white;
@@ -132,10 +136,11 @@ a{
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div#content {
    grid-area: app-content;
-  margin-left: 200px;
   padding: 1px 16px;
   height: 1000px;
+  background-size: cover;
 }
+
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
