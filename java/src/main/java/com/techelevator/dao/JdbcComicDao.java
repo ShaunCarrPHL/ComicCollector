@@ -4,9 +4,10 @@ import com.techelevator.model.Character;
 import com.techelevator.model.Comic;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class JdbcComicDao implements ComicDao{
 
     private JdbcTemplate jdbcTemplate;

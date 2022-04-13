@@ -1,6 +1,8 @@
 package com.techelevator.controller;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.util.Arrays;
+
 import com.techelevator.dao.*;
 import com.techelevator.model.Comic;
 import com.techelevator.services.MarvelComicService;
@@ -39,9 +41,11 @@ public class ComicController {
     MessageDigest md = MessageDigest.getInstance("MD5");
     byte[] theMD5Digest = md.digest(hashCombo);
 // turn hash byte array into a string
-    String hash = String.valueOf(theMD5Digest);
+    String hash = Arrays.toString(theMD5Digest);
 
-   // @RequestMapping(path = ("/comics/{comicId}" + "?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash) , method = RequestMethod.GET)
+    //"?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash
+
+   @RequestMapping(path = "/comics/{comicId}", method = RequestMethod.GET)
     public Comic getComicById(@PathVariable int comicId) {
         return comicDao.getComicById(comicId);
     }
