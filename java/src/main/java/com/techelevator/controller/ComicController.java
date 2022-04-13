@@ -2,6 +2,7 @@ package com.techelevator.controller;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Arrays;
+import java.util.List;
 
 import com.techelevator.dao.*;
 import com.techelevator.model.Comic;
@@ -47,7 +48,10 @@ public class ComicController {
         return comicDao.getComicByTitle(title);
     }
 
-
+    @RequestMapping(path ="comic", method = RequestMethod.GET)
+    public List<Comic> listAllComics() {
+        return comicDao.listAllComics();
+    }
 
 
 

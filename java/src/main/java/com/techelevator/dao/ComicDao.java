@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface ComicDao {
 
+
+    int getMarvelComicId(int comicId);
     List<Comic> listAllComics();
-    List<Comic> listComicsByPublisherId(int publisherId);
     List<Comic> listComicsBySeriesId(int seriesId);
     List<Comic> listComicsByAuthor(String author);
     List<Comic> listComicsInCollection(int collectionId);

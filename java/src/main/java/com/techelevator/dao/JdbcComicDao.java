@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class JdbcComicDao implements ComicDao{
@@ -18,14 +19,24 @@ public class JdbcComicDao implements ComicDao{
     }
 
     @Override
-    public List<Comic> listAllComics() {
-        return null;
+    public int getMarvelComicId(int comicId) {
+        return 0;
     }
 
     @Override
-    public List<Comic> listComicsByPublisherId(int publisherId) {
-        return null;
+    public List<Comic> listAllComics() {
+        List<Comic> comics = new ArrayList<>();
+        String sql ="SELECT * FROM comics;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            Comic comic = mapRowToComic(results);
+            comics.add(comic);
+
+        }
+        return comics;
     }
+
 
     @Override
     public List<Comic> listComicsBySeriesId(int seriesId) {
@@ -68,10 +79,12 @@ public class JdbcComicDao implements ComicDao{
     private Comic mapRowToComic(SqlRowSet rs) {
         Comic comic = new Comic();
         comic.setComicId(rs.getInt("comic_id"));
+        comic.setMarvelId(rs.getInt("marvel_Id"));
         comic.setComicTitle(rs.getString("comic_name"));
-        comic.setImage(rs.getString("imageURL"));
+        comic.setImage(rs.getString("image"));
         comic.setAuthor(rs.getString("author"));
         comic.setReleaseDate(rs.getDate("release_date"));
+        comic.setDescription(rs.getString("description"));
         return comic;
     }
 
