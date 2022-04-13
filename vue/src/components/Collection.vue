@@ -102,7 +102,22 @@ export default {
 
 <style scoped>
 section{
-    padding: 50%;
+    display: grid;
+    grid-area: section;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "header header header header header"
+    "section section section section section"
+    ". app-footer app-footer app-footer .";
+
+
+     margin-right: 50%;
+    background-color: rgb(66, 64, 64);
+    text-align: center;
+    height: 90vh;
+    border-radius: 25px;
+    color: white;
+    font-size: 20px;
 }
 
 </style>
