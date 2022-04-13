@@ -11,6 +11,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import java.lang.String;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,24 +43,40 @@ public class MarvelComicService {
         return new HttpEntity<>(headers);
     }
 
-    private String generateAuthInfo() {
-        String AuthInfo = "";
-            // Get the hash combination ready
-        try {
-            byte[] hashCombo = (timestamp + publicKey + privateKey).getBytes(StandardCharsets.UTF_8);
-            // Use MD5 to digest hash
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] theMD5Digest = md.digest(hashCombo);
-            // turn hash byte array into a string
-            String hash = Arrays.toString(theMD5Digest);
-            AuthInfo = "?ts=" + timestamp + "&apikey=" + publicKey + "&hash=" + hash;
-        } catch(NoSuchAlgorithmException e) {
-            e.getMessage();
-            System.out.println("Authentication process failed. Check API keys.");
-        }
+    private List<String> generateAuthInfo() {
 
-        return AuthInfo;
-}
+        List<String> listOfAuthInfo = new ArrayList<>();
+        listOfAuthInfo.add(timestamp);
+        listOfAuthInfo.add(publicKey);
+        listOfAuthInfo.add(privateKey);
+
+        try {
+            String hashString = timestamp + publicKey + privateKey;
+
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            byte[] messageDigest = md.digest(hashString.getBytes());
+
+            BigInteger bigInt = new BigInteger(1, messageDigest);
+
+            String hashText = bigInt.toString(16);
+            while (hashText.length() < 32) {
+                hashText = "0" + hashText;
+            }
+            listOfAuthInfo.add(hashText);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+        }
+        return listOfAuthInfo;
+    }
+
+    private String authInfoToString() {
+
+        String auth = "?ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
+        return auth;
+    }
+
+
     public String findCharacterId(String id, String jsonString, Integer offset){
         int indexOfId = jsonString.indexOf(id);
         int beginIndexOfValue = indexOfId + id.length() + offset;
@@ -81,7 +98,7 @@ public class MarvelComicService {
         int characterId = 0;
 
         try{
-            String authInfo = generateAuthInfo();
+            String authInfo = authInfoToString();
 
             String path = Api_Base_URL + "characters?name=" + characterName + authInfo;
             ResponseEntity<String> response =
@@ -127,7 +144,7 @@ public class MarvelComicService {
         String listComicsJsonString = null;
 
         try{
-            String authInfo = generateAuthInfo();
+            String authInfo = authInfoToString();
             String path = Api_Base_URL + "/characters/" + characterId + "/comics" + authInfo;
 
             ResponseEntity<String> response =
@@ -163,7 +180,7 @@ public class MarvelComicService {
         return listComics;
     }
 
-    public List<MarvelComic> getAllComics(){
+    /*public List<MarvelComic> getAllComics(){
 
         String allComics = null;
         MarvelComic marvelComic = new MarvelComic();
@@ -181,7 +198,7 @@ public class MarvelComicService {
         }
 
         return null;
-    }
+    }*/
 
 
 
