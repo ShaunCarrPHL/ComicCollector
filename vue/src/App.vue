@@ -10,6 +10,7 @@
       <link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
     </div>
       
+    
     <div id='title'>
       <div> A World Of Marvels </div>
     
@@ -23,6 +24,8 @@
         <a href="#search">Search</a>
       </div>
     </div>
+    
+
     
     <div id="content" :style="{'background-image':'url(https://wallpaperaccess.com/full/430398.jpg)'}">
       <router-view />
@@ -60,8 +63,10 @@ export default {
      "nav-menu app-content app-content app-content app-content"
       ". app-footer app-footer app-footer ."
      */
-    
   ;  
+  font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
+  background-color: rgb(20, 19, 19); 
+  color: white;
 }
 
 #footer{
@@ -90,13 +95,7 @@ div#title{
 }
 
 /*Fix the grid area of app*/
-section#app{
 
-  font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
-  background-color: rgb(20, 19, 19); 
-  color: white;
-  
-}
 
 a{
   color: yellow;
@@ -111,6 +110,9 @@ a{
   /* position: fixed; */
   height: 50px;
   /* overflow: auto; */
+  padding-bottom: 35px;
+  margin-bottom: 35px;
+  margin-top: 10px;
 
 }
 
@@ -137,8 +139,9 @@ a{
 div#content {
    grid-area: app-content;
   padding: 1px 16px;
-  height: 1000px;
+  height: 800px;
   background-size: cover;
+  margin-top: 25px;
 }
 
 

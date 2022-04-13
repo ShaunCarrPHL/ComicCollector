@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Collection from '../components/Collection.vue'
 import Contact from '../views/Contact.vue'
+// import Search from '../components/Search.vue'
 
 Vue.use(Router)
 
@@ -69,8 +70,9 @@ const router = new Router({
     component: Contact,
     meta: {
       requiresAuth: false,
-    }
+    },
   }
+  
   ]
 })
 
