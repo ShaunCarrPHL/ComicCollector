@@ -25,7 +25,7 @@ public class MarvelComicService {
     private RestTemplate restTemplate = new RestTemplate();
 
     String Api_Base_URL = "http://gateway.marvel.com/v1/public/";
-    Long timestamp;
+    String timestamp = String.valueOf(Math.floor(Math.random()));
     String privateKey = "26f65896d570b55683c0ae7e408acddd730e64bd";
     String publicKey = "f574334c33d7534733b1fb8eedd88f7e";
 
@@ -33,7 +33,7 @@ public class MarvelComicService {
 
     public MarvelComicService(String Api_Base_URL, String timestamp, String privateKey, String publicKey) {
         this.Api_Base_URL = Api_Base_URL;
-        this.timestamp = (long)1;
+        this.timestamp = timestamp;
         this.privateKey = privateKey;
         this.publicKey = publicKey;
     }
@@ -46,8 +46,8 @@ public class MarvelComicService {
     private List<String> generateAuthInfo() {
 
         List<String> listOfAuthInfo = new ArrayList<>();
-        timestamp += 1;
-        listOfAuthInfo.add(String.valueOf(timestamp));
+
+        listOfAuthInfo.add(timestamp);
         listOfAuthInfo.add(publicKey);
         listOfAuthInfo.add(privateKey);
 
@@ -72,11 +72,11 @@ public class MarvelComicService {
         return listOfAuthInfo;
     }
 
-    /*private String authInfoToString() {
+    private String authInfoToString() {
 
-        String auth = "&ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
+        String auth = "ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
         return auth;
-    }*/
+    }
 
 
     public String findCharacterId(String id, String jsonString, Integer offset){
@@ -103,7 +103,7 @@ public class MarvelComicService {
 
         try{
 
-            String exchangePath = Api_Base_URL + "characters?name=" + characterName + "&ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
+            String exchangePath = Api_Base_URL + "characters?name=" + characterName + "&" + authInfoToString();
             ResponseEntity<String> response =
                     restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             characterJsonString = response.getBody();
@@ -147,7 +147,7 @@ public class MarvelComicService {
         String listComicsJsonString = null;
 
         try{
-            String path = Api_Base_URL + "/characters/" + characterId + "/comics" + "?ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
+            String path = Api_Base_URL + "/characters/" + characterId + "/comics" + "?" + authInfoToString();
 
             ResponseEntity<String> response =
                     restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
