@@ -25,7 +25,7 @@ public class MarvelComicService {
     private RestTemplate restTemplate = new RestTemplate();
 
     String Api_Base_URL = "http://gateway.marvel.com/v1/public/";
-    String timestamp = "123";
+    Long timestamp;
     String privateKey = "26f65896d570b55683c0ae7e408acddd730e64bd";
     String publicKey = "f574334c33d7534733b1fb8eedd88f7e";
 
@@ -33,7 +33,7 @@ public class MarvelComicService {
 
     public MarvelComicService(String Api_Base_URL, String timestamp, String privateKey, String publicKey) {
         this.Api_Base_URL = Api_Base_URL;
-        this.timestamp = timestamp;
+        this.timestamp = (long)1;
         this.privateKey = privateKey;
         this.publicKey = publicKey;
     }
@@ -46,12 +46,13 @@ public class MarvelComicService {
     private List<String> generateAuthInfo() {
 
         List<String> listOfAuthInfo = new ArrayList<>();
-        listOfAuthInfo.add(timestamp);
+        timestamp += 1;
+        listOfAuthInfo.add(String.valueOf(timestamp));
         listOfAuthInfo.add(publicKey);
         listOfAuthInfo.add(privateKey);
 
         try {
-            String hashString = timestamp + publicKey + privateKey;
+            String hashString = timestamp + privateKey + publicKey;
 
             MessageDigest md = MessageDigest.getInstance("MD5");
 
@@ -64,17 +65,18 @@ public class MarvelComicService {
                 hashText = "0" + hashText;
             }
             listOfAuthInfo.add(hashText);
+
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
         }
         return listOfAuthInfo;
     }
 
-    private String authInfoToString() {
+    /*private String authInfoToString() {
 
-        String auth = "?ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
+        String auth = "&ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
         return auth;
-    }
+    }*/
 
 
     public String findCharacterId(String id, String jsonString, Integer offset){
@@ -86,8 +88,10 @@ public class MarvelComicService {
     }
 
     public String pathFinder(String pathKey, String comicJsonString, Integer offset){
+
         int indexOfPathKey = comicJsonString.indexOf(pathKey);
         int indexStart = indexOfPathKey + pathKey.length() + offset;
+
         String[] split = comicJsonString.substring(indexStart).split("\"");
         String isolatedPath = split[0];
         return isolatedPath;
@@ -98,11 +102,10 @@ public class MarvelComicService {
         int characterId = 0;
 
         try{
-            String authInfo = authInfoToString();
 
-            String path = Api_Base_URL + "characters?name=" + characterName + authInfo;
+            String exchangePath = Api_Base_URL + "characters?name=" + characterName + "&ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
             ResponseEntity<String> response =
-                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+                    restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             characterJsonString = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e){
             System.out.println(e.getMessage());
@@ -144,8 +147,7 @@ public class MarvelComicService {
         String listComicsJsonString = null;
 
         try{
-            String authInfo = authInfoToString();
-            String path = Api_Base_URL + "/characters/" + characterId + "/comics" + authInfo;
+            String path = Api_Base_URL + "/characters/" + characterId + "/comics" + "?ts=" + generateAuthInfo().get(0) + "&apikey=" + generateAuthInfo().get(1) + "&hash=" + generateAuthInfo().get(3);
 
             ResponseEntity<String> response =
                     restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
