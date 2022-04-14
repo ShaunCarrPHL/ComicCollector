@@ -13,9 +13,10 @@ public class MarvelComic {
     private int creatorId;
     private int seriesId;
     private String description;
+    private String extension;
     public MarvelComic (){}
 
-    public MarvelComic(int comicId, String comicTitle, String author, String imageURL, Date releaseDate, int creatorId, int seriesId, String description) {
+    public MarvelComic(int comicId, String comicTitle, String author, String imageURL, Date releaseDate, int creatorId, int seriesId, String description, String extension) {
         this.comicId = comicId;
         this.marvelId = marvelId;
         this.comicTitle = comicTitle;
@@ -25,6 +26,7 @@ public class MarvelComic {
         this.creatorId = creatorId;
         this.seriesId = seriesId;
         this.description = description;
+        this.extension = extension;
     }
 
     //getters
@@ -64,6 +66,10 @@ public class MarvelComic {
         return description;
     }
 
+    public String getExtension() {
+        return extension;
+    }
+
     //setters
     public void setComicId(int comicId) {
         this.comicId = comicId;
@@ -96,6 +102,8 @@ public class MarvelComic {
     }
 
     public void setDescription(String description) {this.description = description;}
+
+    public void setExtension(String extension) {this.extension = extension;}
 
     public String toString() {
         return "Comic{" + comicId +
