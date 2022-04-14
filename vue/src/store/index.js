@@ -19,7 +19,14 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    comics:[],
+    activeComic:{
+      id: 0,
+      title: '',
+      author:'',
+      image:''
+    }
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +44,9 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_COMICS(state, data){
+      state.comics=data;
     }
   }
 })

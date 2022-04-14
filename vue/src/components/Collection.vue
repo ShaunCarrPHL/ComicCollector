@@ -10,17 +10,6 @@
       <div id="addCollection">
        <add-collection collections="collections" /> 
       </div>
-
-
-      <div id="search">
-       <input type="text" v-model="search" placeholder="Search" />
-       
-       <select v-model="searchCategory">
-              <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
-        </select>
-       <button>Search</button>   
-       <h3 v-for="comic in filteredComics" v-bind:key="comic" style="color: white;">{{comic.title}}||{{comic.author}}</h3>   
-      </div>
       </div>
       
 </template>
@@ -28,6 +17,7 @@
 <script>
 import NewComic from "@/views/NewComic.vue"
 import AddCollection from '../views/AddCollection.vue'
+
 
 
 export default {
@@ -114,7 +104,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
     grid-template-areas: 
-    "collection collection collection addCollection search";
+    "collection collection collection addCollection addCollection";
 
     margin-right: 5px;
     /*background-color: rgb(66, 64, 64);*/
@@ -142,13 +132,6 @@ export default {
     padding: 25px;
     margin: 25px;
 }
-.search{
-    
-    grid-area: search;
-    padding: 25px;
-    margin: 25px;
-    
-} 
 
 
 </style>

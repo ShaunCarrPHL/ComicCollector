@@ -8,6 +8,8 @@ import store from '../store/index'
 import Collection from '../components/Collection.vue'
 import Contact from '../views/Contact.vue'
 import Search from '../components/Search.vue'
+import ComicList from "../components/ComicList.vue"
+import Comic from "../components/Comic.vue"
 
 Vue.use(Router)
 
@@ -79,7 +81,22 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/comics",
+      name: "comics",
+      component: ComicList,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {path: "/comics/:comicId",
+    name: "comicById",
+    component: Comic,
+    meta: {
+      requiresAuth: false
     }
+  }
   
   ]
 })

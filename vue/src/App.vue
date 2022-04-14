@@ -20,7 +20,7 @@
          <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         <router-link v-bind:to="{name: 'collection'}" v-if="$store.state.token != ''">Collection</router-link>
         <router-link v-bind:to="{name: 'contact'}">Contact</router-link>
-        <router-link v-bind:to="{name: 'search'}" v-if="$store.state.token != ''">Search</router-link>
+        <router-link v-bind:to="{name: 'search'}">Search</router-link>
       </div>
     </div>
     
