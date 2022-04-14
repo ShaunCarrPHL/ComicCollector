@@ -2,6 +2,9 @@
   <div>
       <input type="text">
       <button>Search</button>
+
+      <div id="search">
+        </div>
   </div>
 </template>
 
