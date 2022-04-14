@@ -46,16 +46,15 @@ public class ComicController {
         return comicDao.getComicByTitle(title);
     }
 
-    @RequestMapping(path ="comic", method = RequestMethod.GET)
-    public List<Comic> listAllComics() {
-        return comicDao.listAllComics();
+    @RequestMapping(path ="/comics", method = RequestMethod.GET)
+    public List<MarvelComic> listAllComics() {
+        return marvelComicService.getAllComics();
     }
 
     @RequestMapping(path = "/characters/name/{characterName}", method = RequestMethod.GET)
     public List<MarvelComic> getAllComicsByCharacterName(@PathVariable String characterName) {
         return marvelComicService.getComicListByCharacterName(characterName);
     }
-
 
 
 

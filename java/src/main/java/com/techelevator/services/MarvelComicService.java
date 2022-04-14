@@ -157,6 +157,33 @@ public class MarvelComicService {
             System.out.println(e.getMessage());
         }
 
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getAllComics(){
+        List<MarvelComic> listComics = new ArrayList<MarvelComic>();
+        String allComics = null;
+
+        try{
+
+            String path = Api_Base_URL + "/comics?" + authInfoToString();
+
+            ResponseEntity<String> response =
+            restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            allComics = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(allComics, listComics);
+    }
+
+    public List<MarvelComic> getComicByCreatorName(){
+        return null;
+    }
+
+    public List<MarvelComic> comicsJsonString(String listComicsJsonString, List<MarvelComic> listComics){
         while(listComicsJsonString.contains("\"events\"")) {
             MarvelComic marvelComic = new MarvelComic();
             List<String> listOfComicInfo = new ArrayList<String>();
@@ -178,29 +205,8 @@ public class MarvelComicService {
 
             listComics.add(marvelComic);
         }
-
         return listComics;
     }
-
-    /*public List<MarvelComic> getAllComics(){
-
-        String allComics = null;
-        MarvelComic marvelComic = new MarvelComic();
-
-        try{
-            String marvelAuthInfo = generateAuthInfo();
-            String comicUrl = Api_Base_URL + "/comics/" + marvelAuthInfo;
-
-            ResponseEntity<String> response =
-            restTemplate.exchange(comicUrl, HttpMethod.GET, makeHeaders(), String.class);
-            allComics = response.getBody();
-
-        } catch(RestClientResponseException | ResourceAccessException e){
-            System.out.println(e.getMessage());
-        }
-
-        return null;
-    }*/
 
 
 
