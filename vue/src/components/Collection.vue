@@ -3,38 +3,22 @@
       
       <div class="collection">
         <h2>My Collection</h2>
-        <div id="nav">
-            <router-link v-bind:to="{ name: 'home' }">Search My Collection</router-link>&nbsp;|&nbsp;
-            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Add Comic</router-link>
-            <router-link v-bind:to="{name: 'login'}"></router-link> -->
-        </div>
         <!--TODO: add v-for to iterate through comics for display-->
        Add Comic to Collection:<new-comic /> 
        <!--TODO: add dropdown menu to select collection for comic-->
       </div>
-
-    <!--
       <div id="addCollection">
        <add-collection collections="collections" /> 
       </div>
-
-
-      <div id="search">
-       <input type="text" v-model="search" placeholder="Search" />
-       
-       <select v-model="searchCategory">
-              <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
-        </select>
-       <button>Search</button>   
-       <h3 v-for="comic in filteredComics" v-bind:key="comic" style="color: white;">{{comic.title}}||{{comic.author}}</h3>   
-      -->
       </div>
       
 </template>
 
 <script>
 import NewComic from "@/views/NewComic.vue"
-// import AddCollection from '../views/AddCollection.vue'
+import AddCollection from '../views/AddCollection.vue'
+
+
 
 export default {
     data() {
@@ -74,7 +58,7 @@ export default {
     },
    components: {
       NewComic,
-    //   AddCollection
+      AddCollection
    },
    methods:{
        loadComics(){
@@ -118,10 +102,9 @@ export default {
 <style scoped>
 #main{
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
     grid-template-areas: 
-    
-    "collection"; 
+    "collection collection collection addCollection addCollection";
 
     margin-right: 5px;
     /*background-color: rgb(66, 64, 64);*/
@@ -135,6 +118,7 @@ export default {
     
     
 }
+
 .collection{
     
     grid-area: collection;
@@ -142,19 +126,12 @@ export default {
     margin: 25px;
     
 }
-/* .addCollection{
+ .addCollection{
     
     grid-area: addCollection;
     padding: 25px;
     margin: 25px;
 }
-.search{
-    
-    grid-area: search;
-    padding: 25px;
-    margin: 25px;
-    
-} */
 
 
 </style>

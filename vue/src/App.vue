@@ -6,8 +6,8 @@
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       <router-link v-bind:to="{name: 'login'}"></router-link> -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     </div>
       
     
@@ -19,9 +19,8 @@
           <router-link v-bind:to="{name: 'login'}"></router-link>
          <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         <router-link v-bind:to="{name: 'collection'}" v-if="$store.state.token != ''">Collection</router-link>
-        <a href="#collection">Collection</a>
         <router-link v-bind:to="{name: 'contact'}">Contact</router-link>
-        <a href="#search">Search</a>
+        <router-link v-bind:to="{name: 'search'}">Search</router-link>
       </div>
     </div>
     
@@ -80,13 +79,13 @@ div#nav{
 }
 
 div#title{
-  @import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
   grid-area: header ;
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 100px;
-  font-family: 'Rubik Moonrocks', cursive;
+  font-family: 'Bangers', cursive;
   height: 15vh;
   padding-top: 10vh;
   border-radius: 25px;

@@ -1,7 +1,7 @@
 <template>
   <div>
       <h2>Comics</h2>
-      <comic v-for="comic in comic" v-bind:key="comic.id"/>
+      <comic v-for="comic in comics" v-bind:key="comic.id"/>
   </div>
 </template>
 
