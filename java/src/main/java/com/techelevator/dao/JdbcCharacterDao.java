@@ -29,7 +29,7 @@ public class JdbcCharacterDao implements CharacterDao {
     @Override
     public Character getComicByCharacterName(String name) {
         Character character = null;
-        String sql = "SELECT * FROM hero WHERE hero_name =?;";
+        String sql = "SELECT * FROM hero WHERE hero_name Like =?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, name);
 
        if (results.next()) {
