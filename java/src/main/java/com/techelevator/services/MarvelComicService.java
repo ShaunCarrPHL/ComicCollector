@@ -78,8 +78,16 @@ public class MarvelComicService {
         return auth;
     }
 
-
+// TODO MAJOR code smell in next two methods...need to rename and combine
     public String findCharacterId(String id, String jsonString, Integer offset){
+        int indexOfId = jsonString.indexOf(id);
+        int beginIndexOfValue = indexOfId + id.length() + offset;
+        String[] split = jsonString.substring(beginIndexOfValue).split(",");
+        String isolatedId = split[0];
+        return isolatedId;
+    }
+
+    public String findCreatorId(String id, String jsonString, Integer offset){
         int indexOfId = jsonString.indexOf(id);
         int beginIndexOfValue = indexOfId + id.length() + offset;
         String[] split = jsonString.substring(beginIndexOfValue).split(",");
@@ -116,11 +124,27 @@ public class MarvelComicService {
         return characterId;
     }
 
-    //listOfComicInfo
+    public int getCreatorIdByName(String creatorName){
+        String creatorJsonString = null;
+        int creatorId = 0;
+
+        try{
+
+            String exchangePath = Api_Base_URL + "creators?name=" + creatorName + "&" + authInfoToString();
+            ResponseEntity<String> response =
+                    restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
+            creatorJsonString = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+        creatorId = Integer.valueOf(findCreatorId("\"id\"", creatorJsonString, 1));
+        return creatorId;
+    }
+
 
     public List<String> extractComicInfo(String comicJsonString){
 
-        List<String> listOfComicInfo = new ArrayList<String>();
+        List<String> listOfComicInfo = new ArrayList<>();
 
         String id = findCharacterId("\"id\"", comicJsonString, 1);
         listOfComicInfo.add(id);
@@ -139,10 +163,21 @@ public class MarvelComicService {
 
         return listOfComicInfo;
     }
+    //TODO Extract Creator info from JSON
+    public List<String> extractCreatorInfo(String jsonString){
+        List<String> listOfCreatorInfo = new ArrayList<>();
+
+        String id = findCreatorId("\"id\"", jsonString, 1);
+        listOfCreatorInfo.add(id);
+
+        String fullName;
+
+        return listOfCreatorInfo;
+    }
 
     public List<MarvelComic> getComicListByCharacterName(String characterName){
 
-        List<MarvelComic> listComics = new ArrayList<MarvelComic>();
+        List<MarvelComic> listComics = new ArrayList<>();
         int characterId = getCharacterIdByName(characterName);
         String listComicsJsonString = null;
 
@@ -161,7 +196,7 @@ public class MarvelComicService {
     }
 
     public List<MarvelComic> getAllComics(){
-        List<MarvelComic> listComics = new ArrayList<MarvelComic>();
+        List<MarvelComic> listComics = new ArrayList<>();
         String allComics = null;
 
         try{
@@ -178,9 +213,25 @@ public class MarvelComicService {
 
         return comicsJsonString(allComics, listComics);
     }
+// TODO get a list of comics by creator name -- isn't working properly yet
+    public List<MarvelComic> getComicByCreatorName(String creatorName){
 
-    public List<MarvelComic> getComicByCreatorName(){
-        return null;
+        List<MarvelComic> listComics = new ArrayList<>();
+        int creatorId = getCreatorIdByName(creatorName);
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/creators/" + creatorId + "/comics" + "?&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
     }
 
     public List<MarvelComic> comicsJsonString(String listComicsJsonString, List<MarvelComic> listComics){

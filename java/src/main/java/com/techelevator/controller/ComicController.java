@@ -55,6 +55,11 @@ public class ComicController {
     public List<MarvelComic> getAllComicsByCharacterName(@PathVariable String characterName) {
         return marvelComicService.getComicListByCharacterName(characterName);
     }
+// TODO Not yet functional
+    @RequestMapping(path = "/creators/name/{creatorName}/", method = RequestMethod.GET)
+    public List<MarvelComic> getComicsByCreatorName(@PathVariable String creatorName) {
+        return marvelComicService.getComicByCreatorName(creatorName);
+    }
 
 
 
