@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS comic_collection;
 DROP TABLE IF EXISTS hero;
 DROP TABLE IF EXISTS comic_hero;
 DROP TABLE IF EXISTS creator;
-DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS series;
 
 DROP SEQUENCE IF EXISTS seq_user_id;
@@ -17,7 +16,6 @@ DROP SEQUENCE IF EXISTS seq_comic_collection_id;
 DROP SEQUENCE IF EXISTS seq_hero_id;
 DROP SEQUENCE IF EXISTS seq_comic_hero_id;
 DROP SEQUENCE IF EXISTS seq_creator_id;
-DROP SEQUENCE IF EXISTS seq_account_id;
 DROP SEQUENCE IF EXISTS seq_series_id;
 
 
@@ -63,11 +61,6 @@ CREATE SEQUENCE seq_creator_id
   NO MINVALUE
   CACHE 1;
   
-CREATE SEQUENCE seq_account_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
   
 CREATE SEQUENCE seq_series_id
   INCREMENT BY 1
@@ -85,8 +78,9 @@ CREATE TABLE users (
 CREATE TABLE collection (
 	collection_id int DEFAULT nextval('seq_collection_id'::regclass) NOT NULL,
 	collection_name varchar(50) NOT NULL,
+	user_id int  REFERENCES users (user_id),
 	-- check to make sure doesnt start with true etc.
-	private boolean NOT NULL,
+	private boolean DEFAULT true,
 	CONSTRAINT PK_collection PRIMARY KEY (collection_id)
 );
 
@@ -120,13 +114,7 @@ CREATE TABLE comic (
 	
 );
 
-CREATE TABLE account (
-	account_id int DEFAULT nextval('seq_account_id'::regclass) NOT NULL,
-	collection_id int REFERENCES collection (collection_id),
---	transfer_id int REFERENCES transfer (transfer_id),
-	username varchar(50) REFERENCES users (username),
-	CONSTRAINT PK_account PRIMARY KEY (account_id)
-);
+
 
 CREATE TABLE comic_collection (
 	comic_collection_id int DEFAULT nextval('seq_comic_collection_id'::regclass) NOT NULL,

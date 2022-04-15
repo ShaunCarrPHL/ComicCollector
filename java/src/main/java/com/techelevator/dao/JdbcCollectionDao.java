@@ -29,6 +29,16 @@ public class JdbcCollectionDao implements CollectionDao{
 
     @Override
     public Collection createCollection(Collection collection) {
+
+      /*  String sql ="INSERT INTO collection(collection_name,";
+
+        int collection_id=-1;
+
+        try{
+            collection_id = jdbcTemplate.queryForObject()
+        }*/
+
+
         return null;
     }
 }
