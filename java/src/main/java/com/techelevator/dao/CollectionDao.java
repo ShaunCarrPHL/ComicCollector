@@ -11,6 +11,6 @@ List<Collection> listAllPublicCollections();
 List<Collection> getCollectionsByUserId(int userId);
 Collection getCollectionById(int collectionId);
 int createCollection(String collectionName, int userId);
-    boolean addComic(int comicId, int collectionId);
+boolean addComicToCollection(int marvelId, String comicTitle, String imageUrl, String description, int collectionId);
 
 }
