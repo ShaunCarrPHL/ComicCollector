@@ -33,7 +33,9 @@ public class JdbcCollectionDao implements CollectionDao{
     @Override
     public boolean addComic(int comicId, int collectionId) {
         String sql ="INSERT INTO collection(collection_id, comic_id" +
-                "SELECT ?,? "
+                "SELECT ?,? ";
+
+        return false;
     }
 
     @Override

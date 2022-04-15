@@ -239,7 +239,7 @@ public class MarvelComicService {
     public List<MarvelComic> comicsJsonString(String listComicsJsonString, List<MarvelComic> listComics){
         while(listComicsJsonString.contains("\"events\"")) {
             MarvelComic marvelComic = new MarvelComic();
-            List<String> listOfComicInfo = new ArrayList<String>();
+            List<String> listOfComicInfo = new ArrayList<>();
 
             listOfComicInfo = extractComicInfo(listComicsJsonString);
 

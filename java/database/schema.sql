@@ -7,17 +7,11 @@ DROP TABLE IF EXISTS comic_collection;
 DROP TABLE IF EXISTS hero;
 DROP TABLE IF EXISTS comic_hero;
 DROP TABLE IF EXISTS creator;
+DROP TABLE IF EXISTS creator_comic;
 DROP TABLE IF EXISTS series;
+DROP TABLE IF EXISTS series_comic;
 
 DROP SEQUENCE IF EXISTS seq_user_id;
-DROP SEQUENCE IF EXISTS seq_comic_id;
-DROP SEQUENCE IF EXISTS seq_collection_id;
-DROP SEQUENCE IF EXISTS seq_comic_collection_id;
-DROP SEQUENCE IF EXISTS seq_hero_id;
-DROP SEQUENCE IF EXISTS seq_comic_hero_id;
-DROP SEQUENCE IF EXISTS seq_creator_id;
-DROP SEQUENCE IF EXISTS seq_series_id;
-
 
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
@@ -25,48 +19,6 @@ CREATE SEQUENCE seq_user_id
   NO MINVALUE
   CACHE 1;
   
-CREATE SEQUENCE seq_comic_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-CREATE SEQUENCE seq_collection_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-CREATE SEQUENCE seq_comic_collection_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-CREATE SEQUENCE seq_hero_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-CREATE SEQUENCE seq_comic_hero_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-CREATE SEQUENCE seq_creator_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
-  
-  
-CREATE SEQUENCE seq_series_id
-  INCREMENT BY 1
-  NO MAXVALUE
-  NO MINVALUE
-  CACHE 1;
 CREATE TABLE users (
 	user_id int DEFAULT nextval('seq_user_id'::regclass) NOT NULL,
 	username varchar(50) NOT NULL UNIQUE,
@@ -75,62 +27,79 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE comic (
+	comic_id serial,
+	marvel_id int NOT NULL,
+	image varchar(300),
+	title varchar(50) NOT NULL,
+	description varchar(2000),
+	CONSTRAINT PK_comic PRIMARY KEY (comic_id)
+);
+
 CREATE TABLE collection (
-	collection_id int DEFAULT nextval('seq_collection_id'::regclass) NOT NULL,
+	collection_id serial,
 	collection_name varchar(50) NOT NULL,
-	user_id int  REFERENCES users (user_id),
-	-- check to make sure doesnt start with true etc.
+	user_id int NOT NULL,
 	private boolean DEFAULT true,
-	CONSTRAINT PK_collection PRIMARY KEY (collection_id)
+	CONSTRAINT PK_collection PRIMARY KEY (collection_id),
+	CONSTRAINT fk_collection_user FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE comic_collection (
+	comic_id int NOT NULL,
+	collection_id int NOT NULL,
+	CONSTRAINT FK_comic_collection_comic FOREIGN KEY (comic_id) REFERENCES comic(comic_id),
+	CONSTRAINT FK_comic_collection_collection FOREIGN KEY (collection_id) REFERENCES collection(collection_id)
 );
 
 CREATE TABLE hero (
-	hero_id int DEFAULT nextval('seq_hero_id'::regclass) NOT NULL,
+	hero_id serial,
 	hero_name varchar(75) NOT NULL,
 	CONSTRAINT PK_hero PRIMARY KEY (hero_id)
 );
 
+CREATE TABLE comic_hero (
+	hero_id int NOT NULL,
+	comic_id int NOT NULL,
+	CONSTRAINT FK_comic_hero_hero FOREIGN KEY (hero_id) REFERENCES hero(hero_id),
+	CONSTRAINT FK_comic_hero_comic FOREIGN KEY (comic_id) REFERENCES comic(comic_id)
+);
+
 CREATE TABLE creator (
-	creator_id int DEFAULT nextval('seq_creator_id'::regclass) NOT NULL,
-	publisher_name varchar(75) NOT NULL,
+	creator_id serial,
+	creator_name varchar(100) NOT NULL,
 	CONSTRAINT PK_creator PRIMARY KEY (creator_id)
 );
 
+CREATE TABLE creator_comic (
+	creator_id int NOT NULL,
+	comic_id int NOT NULL,
+	CONSTRAINT FK_creator_comic_creator FOREIGN KEY (creator_id) REFERENCES creator(creator_id),
+	CONSTRAINT FK_creator_comic_comic FOREIGN KEY (comic_id) REFERENCES comic(comic_id)
+);
+
 CREATE TABLE series (
-	series_id int DEFAULT nextval('seq_series_id'::regclass) NOT NULL,
+	series_id serial,
 	series_name varchar(100) NOT NULL,
 	CONSTRAINT PK_series PRIMARY KEY (series_id)
-);
+);	
 
-CREATE TABLE comic (
-	comic_id int DEFAULT nextval('seq_comic_id'::regclass) NOT NULL,
-	creator_id int REFERENCES creator (creator_id),
-	series_id int REFERENCES series (series_id),
-	marvel_id int NOT NULL,
-	image varchar(300) NOT NULL,
-	title varchar(50) NOT NULL,
---	release_date date DEFAULT current_date,
-	CONSTRAINT PK_comic PRIMARY KEY (comic_id)
-	
+CREATE TABLE series_comic (
+	series_id int NOT NULL,
+	comic_id int NOT NULL,
+	CONSTRAINT FK_series_comic_series FOREIGN KEY (series_id) REFERENCES series(series_id),
+	CONSTRAINT FK_seriesr_comic_comic FOREIGN KEY (comic_id) REFERENCES comic(comic_id)
 );
 
 
 
-CREATE TABLE comic_collection (
-	comic_collection_id int DEFAULT nextval('seq_comic_collection_id'::regclass) NOT NULL,
-	comic_id int REFERENCES comic (comic_id),
-	collection_id int REFERENCES collection (collection_id),
-	CONSTRAINT PK_comic_collection PRIMARY KEY (comic_collection_id)
-);
 
 
 
-CREATE TABLE comic_hero (
-	comic_hero_id int DEFAULT nextval('seq_comic_hero_id'::regclass) NOT NULL,
-	hero_id int REFERENCES hero (hero_id),
-	comic_id int REFERENCES comic (comic_id),
-	CONSTRAINT PK_comic_hero PRIMARY KEY (comic_hero_id)
-);
+
+
+
+
 
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
