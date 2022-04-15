@@ -14,6 +14,6 @@ public interface ComicDao {
     List<Comic> listComicsInCollection(int collectionId);
     Comic getComicById(int comicId);
     Comic getComicByTitle(String comicTitle);
-    Comic addComic(Comic comic,int collectionId);
+
 
 }

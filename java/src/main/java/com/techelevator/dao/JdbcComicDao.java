@@ -71,10 +71,7 @@ public class JdbcComicDao implements ComicDao{
         return null;
     }
 
-    @Override
-    public Comic addComic(Comic comic, int collectionId) {
-        return null;
-    }
+
 
     private Comic mapRowToComic(SqlRowSet rs) {
         Comic comic = new Comic();

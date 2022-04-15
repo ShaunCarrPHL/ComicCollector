@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Collection;
+import com.techelevator.model.Comic;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ List<Collection> listAllCollections();
 List<Collection> listAllPublicCollections();
 List<Collection> getCollectionsByUserId(int userId);
 Collection getCollectionById(int collectionId);
-Collection createCollection(Collection collection);
+int createCollection(String collectionName, int userId);
+    boolean addComic(int comicId, int collectionId);
 
 }
