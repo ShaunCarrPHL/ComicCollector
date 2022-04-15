@@ -4,9 +4,11 @@ import com.techelevator.model.Comic;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.techelevator.model.Collection;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Component
 public class JdbcCollectionDao implements CollectionDao{
@@ -38,7 +40,17 @@ public class JdbcCollectionDao implements CollectionDao{
     }
     @Override
     public List<Collection> listAllCollections() {
-        return null;
+        List<Collection> collections = new ArrayList<>();
+
+        String sql = "SELECT * FROM collections WHERE private = false;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        if (results.next()){
+            Collection collection = mapRowToCollections(results);
+            collections.add(collection);
+
+        }
+        return collections;
     }
 
     @Override
@@ -48,7 +60,16 @@ public class JdbcCollectionDao implements CollectionDao{
 
     @Override
     public List<Collection> getCollectionsByUserId(int userId) {
-        return null;
+
+        List<Collection> collections = new ArrayList<>();
+
+        String sql = "SELECT * FROM collections WHERE user_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        if (results.next()){
+            Collection collection = mapRowToCollections(results);
+            collections.add(collection);}
+        return collections;
     }
 
     //TODO check to see if different users can add the same comics to their collection
@@ -97,8 +118,24 @@ public class JdbcCollectionDao implements CollectionDao{
 
     @Override
     public Collection getCollectionById(int collectionId) {
-        return null;
+        Collection collection = null;
+
+        String sql = "SELECT * FROM collections WHERE collection_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        if (results.next()) {
+            collection = mapRowToCollections(results);
+        }
+        return collection;
     }
 
+private Collection mapRowToCollections(SqlRowSet rs) {
+        Collection collection = new Collection();
+
+        collection.setCollectionId(rs.getInt("collection_id"));
+        collection.setCollectionName(rs.getString("collection_name"));
+        collection.setUserId(rs.getInt("user_id"));
+        return collection;
+}
 
 }
