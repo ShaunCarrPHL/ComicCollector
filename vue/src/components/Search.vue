@@ -24,9 +24,10 @@ export default {
             searchResults: [],
             search: "",
             searchCategories: [
-                "General",
                 "Title",
-                "Author"
+                "Author",
+                "Series",
+                "Character"
             ],
             searchCategory: ""
         }

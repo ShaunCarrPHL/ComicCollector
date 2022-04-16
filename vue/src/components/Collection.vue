@@ -2,28 +2,51 @@
   <div id="main">
       
       <div class="collection">
-        <h2>My Collection</h2>
+        <h2>My "{{selectedCollection.title}}" Collection</h2>
         <!--TODO: add v-for to iterate through comics for display-->
        Add Comic to Collection:<new-comic /> 
        <!--TODO: add dropdown menu to select collection for comic-->
+        <table id="comicList">
+          <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for='comic in comics' v-bind:key='comic.comicTitle'>
+                  <td>{{comic.comicTitle}}</td>
+                  <td>{{comic.author}}</td>
+              </tr>
+          </tbody>
+      </table>
       </div>
       <div id="addCollection">
-       <add-collection collections="collections" /> 
+       <add-collection/> 
+
+       <h3>Collections</h3>
+       <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p>
       </div>
-      </div>
+    </div>
       
 </template>
 
 <script>
 import NewComic from "@/views/NewComic.vue"
 import AddCollection from '../views/AddCollection.vue'
-
+import ComicCollectionService from '../services/ComicCollectionService'
 
 
 export default {
     data() {
         return {
-            collections: [ //placeholder
+            collections: [],
+            collectionToCreate: {
+                collectionName: "",
+                private: false,
+                userId: this.$store.state.user.id
+            },
+            collectionsPlaceholder: [ //placeholder
                 {
                     name: "Deadpool Collection",
                     public: true
@@ -35,23 +58,33 @@ export default {
             ],
             comics: [
                 {
-                    title: "Marvelous Marvel",
-                    author: "Neil Armstrong"
+                    comicTitle: "Marvelous Marvel",
+                    marvelId: 111,
+                    comicId: 123,
+                    author: "Neil Armstrong",
+                    imageURL: "http://i.annihil.us/u/prod/marvel/i/mg/c/60/4bc69f11baf75/portrait_uncanny.jpg",
+                    releaseDate: "09/23/1997",
+                    description: "A marvel of the human experience! And the struggles of confusing tax brackets! Find out!! Now!!!"
                 },
                 {
-                    title: "The Amazing Spider-Man #1",
+                    comicTitle: "The Amazing Spider-Man #1",
                     author: "Stan Lee"
                 },
                 {
-                    title: "The Fantastic Four #4",
+                    comicTitle: "The Fantastic Four #4",
                     author: "Jack Kirby"
                 }
             ],
+            selectedCollection: {
+                title: "Placeholder",
+                public: true
+            },
             search: "",
             searchCategories: [
-                "General",
                 "Title",
-                "Author"
+                "Author",
+                "Series",
+                "Character"
             ],
             searchCategory: ""
         };
@@ -64,7 +97,18 @@ export default {
        loadComics(){
            //This would pull the comics from the selected collection, and
            //insert them into the this.comics array
+       },
+       loadCollections(){
+           //Pulling in all collections owned by the user
+           console.log(this.$store.state.user.id);
+           ComicCollectionService.getCollections(this.$store.state.user.id).then(response => {
+               this.collections = response.data;
+           });
+           console.log(this.collectionsTwo);
        }
+   },
+   created(){
+       this.loadCollections();
    },
    computed: {
        filteredComics() {
@@ -133,5 +177,8 @@ export default {
     margin: 25px;
 }
 
+#comicList{
+    justify-content: center;
+}
 
 </style>

@@ -6,11 +6,7 @@ const http=axios.create({
 
 export default{
     getComics(){
-        return http.get('/comics', {
-            headers:{
-                "Access-Control-Allow-Origin": "http://localhost:8080"
-            }
-        });
+        return http.get('/comics');
     },
 
     getComicsByCharacter(characterName){
@@ -23,5 +19,13 @@ export default{
 
     getComicById(comicId){
         return http.get(`/comics/${comicId}`);
+    },
+
+    getCollections(userId){
+        return http.get(`/collection/user/${userId}`);
+    },
+
+    createCollection(collection){
+        return http.post('/collection', collection);
     }
 }
