@@ -42,7 +42,7 @@ public class JdbcCollectionDao implements CollectionDao{
     public List<Collection> listAllCollections() {
         List<Collection> collections = new ArrayList<>();
 
-        String sql = "SELECT * FROM collections WHERE private = false;";
+        String sql = "SELECT * FROM collection WHERE private = false;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         if (results.next()){
@@ -63,10 +63,10 @@ public class JdbcCollectionDao implements CollectionDao{
 
         List<Collection> collections = new ArrayList<>();
 
-        String sql = "SELECT * FROM collections WHERE user_id = ?;";
+        String sql = "SELECT * FROM collection WHERE user_id = ?;";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        if (results.next()){
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,userId);
+        while (results.next()){
             Collection collection = mapRowToCollections(results);
             collections.add(collection);}
         return collections;
@@ -120,7 +120,7 @@ public class JdbcCollectionDao implements CollectionDao{
     public Collection getCollectionById(int collectionId) {
         Collection collection = null;
 
-        String sql = "SELECT * FROM collections WHERE collection_id = ?;";
+        String sql = "SELECT * FROM collection WHERE collection_id = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         if (results.next()) {

@@ -18,6 +18,11 @@ public class CollectionController {
     private CollectionDao collectionDao;
     private ComicDao comicDao;
 
+    public CollectionController(CollectionDao collectionDao, ComicDao comicDao) {
+        this.collectionDao = collectionDao;
+        this.comicDao = comicDao;
+    }
+
     String Api_Base_URL = "http://gateway.marvel.com/v1/public";
  // create collection, add comic to collection, update collection ie rename collection
 
@@ -39,13 +44,14 @@ public class CollectionController {
     public List<Collection> listAllCollections() {
         return collectionDao.listAllCollections();
     }
-    @RequestMapping(path ="/collection/{userId}", method = RequestMethod.GET)
+
+    @RequestMapping(path ="/collection/user/{userId}", method = RequestMethod.GET)
     public List<Collection> getAllCollectionsByUserId(@PathVariable int userId) {
         return collectionDao.getCollectionsByUserId(userId);
 
     }
 
-    @RequestMapping(path ="/collection/{collectionId}", method = RequestMethod.GET)
+    @RequestMapping(path ="/collection/myCollection/{collectionId}", method = RequestMethod.GET)
     public Collection getCollectionById(@PathVariable int collectionId) {
         return collectionDao.getCollectionById(collectionId);
 
