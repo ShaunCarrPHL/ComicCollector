@@ -122,7 +122,7 @@ public class JdbcCollectionDao implements CollectionDao{
 
         String sql = "SELECT * FROM collection WHERE collection_id = ?;";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, collectionId);
         if (results.next()) {
             collection = mapRowToCollections(results);
         }
