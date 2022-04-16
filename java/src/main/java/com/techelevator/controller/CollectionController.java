@@ -4,6 +4,7 @@ import com.techelevator.dao.CollectionDao;
 import com.techelevator.dao.ComicDao;
 import com.techelevator.model.Collection;
 import com.techelevator.model.CollectionDTO;
+import com.techelevator.model.ComicDTO;
 import com.techelevator.model.MarvelModel.MarvelComic;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,8 +38,8 @@ public class CollectionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path = "/collection/comic/{collectionId}", method = RequestMethod.POST)
-    public boolean addComicToCollection(@RequestBody int marvelId, String comicTitle, String imageUrl, String description, int collectionId) throws Exception {
-        return collectionDao.addComicToCollection(marvelId, comicTitle, imageUrl, description, collectionId);
+    public boolean addComicToCollection(@RequestBody ComicDTO newComic) throws Exception {
+        return collectionDao.addComicToCollection(newComic.getMarvelId(), newComic.getComicTitle(), newComic.getImageUrl(), newComic.getDescription(), newComic.getCollectionId());
     }
 
 
