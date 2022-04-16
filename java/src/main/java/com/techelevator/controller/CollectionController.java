@@ -4,6 +4,7 @@ import com.techelevator.dao.CollectionDao;
 import com.techelevator.dao.ComicDao;
 import com.techelevator.model.Collection;
 import com.techelevator.model.CollectionDTO;
+import com.techelevator.model.Comic;
 import com.techelevator.model.ComicDTO;
 import com.techelevator.model.MarvelModel.MarvelComic;
 import org.springframework.http.HttpStatus;
@@ -28,11 +29,11 @@ public class CollectionController {
     String Api_Base_URL = "http://gateway.marvel.com/v1/public";
  // create collection, add comic to collection, update collection ie rename collection
 
-    //should this be a boolean?
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping ( path = "/collection", method = RequestMethod.POST)
     public int createCollection(@RequestBody CollectionDTO newCollection) throws Exception {
-        int test =collectionDao.createCollection(newCollection.getCollectionName(), newCollection.getUserId());
+        int test =collectionDao.createCollection(newCollection.getCollectionName(), newCollection.getUserId(), newCollection.isPrivate());
         return test;
     }
 
@@ -57,6 +58,11 @@ public class CollectionController {
     @RequestMapping(path ="/collection/mycollection/{collectionId}", method = RequestMethod.GET)
     public Collection getCollectionById(@PathVariable int collectionId) {
         return collectionDao.getCollectionById(collectionId);
-
     }
+
+    @RequestMapping(path = "/collection/mycollection/mycomics/{collectionId}", method = RequestMethod.GET)
+    public List<Comic> listComicsInCollection(@PathVariable int collectionId) {
+        return comicDao.listComicsByCollection(collectionId);
+    }
+
 }

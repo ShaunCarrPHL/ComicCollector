@@ -260,8 +260,4 @@ public class MarvelComicService {
         }
         return listComics;
     }
-
-
-
-
 }

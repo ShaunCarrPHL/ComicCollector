@@ -4,6 +4,7 @@ public class CollectionDTO {
 
     private String collectionName;
     private int userId;
+    private boolean isPrivate;
 
     public String getCollectionName() {
         return collectionName;
@@ -13,6 +14,8 @@ public class CollectionDTO {
         return userId;
     }
 
+    public boolean isPrivate(){return true;}
+
     public void setCollectionName(String collectionName) {
         this.collectionName = collectionName;
     }
@@ -20,11 +23,13 @@ public class CollectionDTO {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
     @Override
     public String toString(){
         return "CollectionDTO{" +
                 "collectionName='" + collectionName+'\'' +
-                ", userId=" + userId +
+                ", userId=" + userId + '\'' +
+                ", private=" + isPrivate +
                 '}';
 
 

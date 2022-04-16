@@ -1,15 +1,14 @@
 package com.techelevator.dao;
-
-import com.techelevator.model.Comic;
-import org.springframework.jdbc.core.JdbcTemplate;
 import com.techelevator.model.Collection;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class JdbcCollectionDao implements CollectionDao{
     private JdbcTemplate jdbcTemplate;
@@ -19,15 +18,15 @@ public class JdbcCollectionDao implements CollectionDao{
     }
 
     @Override
-    public int createCollection(String collectionName, int userId) {
+    public int createCollection(String collectionName, int userId, boolean isPrivate) {
 
-        String sql = "INSERT INTO collection(collection_name,user_id)" +
+        String sql = "INSERT INTO collection(collection_name, user_id, private)" +
                 "VALUES(?,?) RETURNING collection_id";
 
         int collectionId = -1;
 
         try {
-            collectionId = jdbcTemplate.queryForObject(sql, Integer.class, collectionName, userId);
+            collectionId = jdbcTemplate.queryForObject(sql, Integer.class, collectionName, userId, isPrivate);
         }catch (DataAccessException e){
             System.out.println(e.getMessage());
         }
@@ -54,9 +53,7 @@ public class JdbcCollectionDao implements CollectionDao{
     }
 
     @Override
-    public List<Collection> listAllPublicCollections() {
-        return null;
-    }
+    public List<Collection> listAllPublicCollections() {return null;}
 
     @Override
     public List<Collection> getCollectionsByUserId(int userId) {
@@ -68,7 +65,8 @@ public class JdbcCollectionDao implements CollectionDao{
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,userId);
         while (results.next()){
             Collection collection = mapRowToCollections(results);
-            collections.add(collection);}
+            collections.add(collection);
+        }
         return collections;
     }
 
@@ -131,10 +129,10 @@ public class JdbcCollectionDao implements CollectionDao{
 
 private Collection mapRowToCollections(SqlRowSet rs) {
         Collection collection = new Collection();
-
         collection.setCollectionId(rs.getInt("collection_id"));
         collection.setCollectionName(rs.getString("collection_name"));
         collection.setUserId(rs.getInt("user_id"));
+        collection.setPrivate(false); //TODO NOT SURE IF THIS IS CORRECT
         return collection;
 }
 

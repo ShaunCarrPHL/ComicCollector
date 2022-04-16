@@ -20,12 +20,11 @@ public class JdbcComicDao implements ComicDao{
     }
 
     @Override
-    public int getMarvelComicId(int comicId) {
-        return 0;
-    }
+    public int getMarvelComicId(int comicId) {return 0;}
 
     @Override
     public List<Comic> listAllComics() {
+
         List<Comic> comics = new ArrayList<>();
         String sql ="SELECT * FROM comics;";
 
@@ -33,25 +32,32 @@ public class JdbcComicDao implements ComicDao{
         while (results.next()) {
             Comic comic = mapRowToComic(results);
             comics.add(comic);
-
         }
         return comics;
     }
 
+    @Override
+    public List<Comic> listComicsBySeriesId(int seriesId) {return null;}
 
     @Override
-    public List<Comic> listComicsBySeriesId(int seriesId) {
-        return null;
-    }
+    public List<Comic> listComicsByAuthor(String author) {return null;}
 
     @Override
-    public List<Comic> listComicsByAuthor(String author) {
-        return null;
-    }
+    public List<Comic> listComicsByCollection(int collectionId) {
 
-    @Override
-    public List<Comic> listComicsInCollection(int collectionId) {
-        return null;
+        List<Comic> comics = new ArrayList<>();
+
+        String sql = "SELECT * FROM comic " +
+                     "JOIN comic_collections ON comic.comic_id = comic_collection.comic_id " +
+                     "WHERE collection_id = ? " +
+                     "GROUP BY title;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, collectionId);
+        while (results.next()) {
+            Comic comic = mapRowToComic(results);
+            comics.add(comic);
+        }
+        return comics;
     }
 
     @Override

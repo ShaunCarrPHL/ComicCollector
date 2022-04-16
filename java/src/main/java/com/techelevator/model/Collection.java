@@ -4,15 +4,16 @@ public class Collection {
 
     private  int collectionId;
     private String collectionName;
-    private boolean isPrivate;
+    private boolean isPrivate = false;
     private int userId;
 
     public Collection(){}
 
-    public Collection(int collectionId, String collectionName, int userId){
+    public Collection(int collectionId, String collectionName, int userId, boolean isPublic){
         this.collectionId = collectionId;
         this.collectionName = collectionName;
         this.userId = userId;
+        this.isPrivate = false;
     }
 
 
@@ -25,8 +26,8 @@ public class Collection {
         this.collectionName = collectionName;
     }
 
-    public void setPrivate(boolean aPrivate) {
-        isPrivate = aPrivate;
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     public void setUserId(int userId) {
