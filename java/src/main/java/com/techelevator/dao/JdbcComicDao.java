@@ -60,9 +60,7 @@ public class JdbcComicDao implements ComicDao{
         String sql = "SELECT * FROM comic WHERE comic_id =?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, comicId);
 
-        if(results.next()){
-            comic = mapRowToComic(results);
-        }
+        if(results.next()){comic = mapRowToComic(results);}
 
         return comic;
     }
@@ -79,10 +77,8 @@ public class JdbcComicDao implements ComicDao{
         Comic comic = new Comic();
         comic.setComicId(rs.getInt("comic_id"));
         comic.setMarvelId(rs.getInt("marvel_Id"));
-        comic.setComicTitle(rs.getString("comic_name"));
+        comic.setComicTitle(rs.getString("title"));
         comic.setImage(rs.getString("image"));
-        comic.setAuthor(rs.getString("author"));
-        comic.setReleaseDate(rs.getDate("release_date"));
         comic.setDescription(rs.getString("description"));
         return comic;
     }
