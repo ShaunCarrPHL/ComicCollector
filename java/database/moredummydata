@@ -1,0 +1,17 @@
+SELECT COUNT(comic_id) FROM comic_collection WHERE collection_id = 2;
+
+INSERT INTO comic(marvel_id, title, image, description)
+SELECT 441, 'couple one', 'thsimage', 'happy description' 
+WHERE NOT EXISTS (SELECT marvel_id FROM comic WHERE marvel_id = 441)
+RETURNING comic_id;
+
+INSERT INTO comic_collection(collection_id, comic_id)
+SELECT 2,5 WHERE NOT EXISTS (SELECT comic_id FROM comic_collection WHERE comic_id = 5) RETURNING collection_id;
+
+SELECT user_id FROM collection WHERE collection_id = 2;
+
+SELECT * FROM users
+mrwow is 3
+
+
+
