@@ -28,8 +28,7 @@ public class CollectionController {
 
     String Api_Base_URL = "http://gateway.marvel.com/v1/public";
  // create collection, add comic to collection, update collection ie rename collection
-
-
+// create  collection also needs to be tested with new .isPrivate functionality
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping ( path = "/collection", method = RequestMethod.POST)
     public int createCollection(@RequestBody CollectionDTO newCollection) throws Exception {
@@ -43,7 +42,6 @@ public class CollectionController {
         return collectionDao.addComicToCollection(newComic.getMarvelId(), newComic.getComicTitle(), newComic.getImageUrl(), newComic.getDescription(), newComic.getCollectionId());
     }
 
-
     @RequestMapping(path ="/collection/list", method = RequestMethod.GET)
     public List<Collection> listAllCollections() {
         return collectionDao.listAllCollections();
@@ -52,14 +50,13 @@ public class CollectionController {
     @RequestMapping(path ="/collection/user/{userId}", method = RequestMethod.GET)
     public List<Collection> getAllCollectionsByUserId(@PathVariable int userId) {
         return collectionDao.getCollectionsByUserId(userId);
-
     }
 
     @RequestMapping(path ="/collection/mycollection/{collectionId}", method = RequestMethod.GET)
     public Collection getCollectionById(@PathVariable int collectionId) {
         return collectionDao.getCollectionById(collectionId);
     }
-
+//Not sure if this should go here or in ComicController...also needs to be tested
     @RequestMapping(path = "/collection/mycollection/mycomics/{collectionId}", method = RequestMethod.GET)
     public List<Comic> listComicsInCollection(@PathVariable int collectionId) {
         return comicDao.listComicsByCollection(collectionId);
