@@ -37,6 +37,18 @@ public class JdbcCollectionDao implements CollectionDao{
 
         return collectionId;
     }
+
+    public void updateCollection(Collection collection){
+        String sql ="UPDATE collection SET collection_name = ?, user_id = ?, private = ?" +
+                "WHERE collection_id = ?;";
+            jdbcTemplate.update(sql,collection.getCollectionName(),collection.getUserId(),collection.isPrivate(),collection.getCollectionId());
+
+    }
+
+
+
+
+
     @Override
     public List<Collection> listAllCollections() {
         List<Collection> collections = new ArrayList<>();
