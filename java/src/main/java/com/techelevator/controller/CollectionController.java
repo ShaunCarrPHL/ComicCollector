@@ -42,6 +42,11 @@ public class CollectionController {
         return collectionDao.addComicToCollection(newComic.getMarvelId(), newComic.getComicTitle(), newComic.getImageUrl(), newComic.getDescription(), newComic.getCollectionId());
     }
 
+    @RequestMapping(path ="/collection/mycollection/{collectionId}", method = RequestMethod.PUT)
+    public void updateCollectionById(@RequestBody Collection collection, @PathVariable int collectionId) {
+       collectionDao.updateCollection(collection);
+    }
+
     @RequestMapping(path ="/collection/list", method = RequestMethod.GET)
     public List<Collection> listAllCollections() {
         return collectionDao.listAllCollections();

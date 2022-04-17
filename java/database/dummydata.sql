@@ -5,14 +5,23 @@ INSERT INTO comic(marvel_id, image, title, description)
 	
 	INSERT INTO collection(collection_id, collection_name, user_id, private)
 	VALUES (999,'cool collection',3,FALSE);
-
 	
-	SELECT * FROM collection;
+    SELECT * FROM comic WHERE comic_id = 2;
 	
-	SELECT * FROM collection WHERE  = 999;
+	SELECT * FROM comic_collection;
+	SELECT * FROM users;
+	
+	SELECT * FROM collection WHERE  = 3;
 	SELECT * FROM collection WHERE user_id = 3;
-	SELECT * FROM collection WHERE collection_id = 999;
+	SELECT * FROM collection;
 	
 	INSERT INTO collection(collection_name,user_id)
                 VALUES('calm collection',3) RETURNING collection_id;
+				
+				SELECT * FROM comic JOIN comic_collection 
+				ON comic.comic_id = comic_collection.comic_id 
+				WHERE collection_id = 2;
+				
+		UPDATE collection SET collection_name = 'sleep collection', user_id = 3, private = true
+                WHERE collection_id = 7;
 	

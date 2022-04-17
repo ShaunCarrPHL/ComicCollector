@@ -4,7 +4,7 @@ public class CollectionDTO {
 
     private String collectionName;
     private int userId;
-    private boolean isPrivate = false;
+    private boolean isPrivate;
 
     public String getCollectionName() {
         return collectionName;
@@ -22,6 +22,9 @@ public class CollectionDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;
     }
 
     @Override
