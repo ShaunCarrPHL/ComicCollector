@@ -249,6 +249,83 @@ public class MarvelComicService {
         return comicsJsonString(listComicsJsonString, listComics);
     }
 
+    public List<MarvelComic> getThisMonthsComics(){
+
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/comics?dateDescriptor=thisMonth&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getLastWeeksComics(){
+
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/comics?dateDescriptor=lastWeek&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getThisWeeksComics(){
+
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/comics?dateDescriptor=thisWeek&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getNextWeeksComics(){
+
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/comics?dateDescriptor=nextWeek&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+
     public List<MarvelComic> comicsJsonString(String listComicsJsonString, List<MarvelComic> listComics){
         while(listComicsJsonString.contains("\"events\"")) {
             MarvelComic marvelComic = new MarvelComic();
