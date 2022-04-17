@@ -103,8 +103,9 @@ export default {
            console.log(this.$store.state.user.id);
            ComicCollectionService.getCollections(this.$store.state.user.id).then(response => {
                this.collections = response.data;
+               this.$store.commit("SET_COLLECTIONS", response.data)
            });
-           console.log(this.collectionsTwo);
+
        }
    },
    created(){

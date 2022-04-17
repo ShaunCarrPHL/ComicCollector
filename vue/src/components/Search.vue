@@ -6,18 +6,25 @@
        <select v-model="searchCategory">
               <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
         </select>
-       <button v-on:click="searchCollection()">Search</button> 
-       <h3 v-for="comic in searchResults" v-bind:key="comic.id" style="color: white;">{{comic.comicTitle}}||{{comic.imageURL}}</h3>    -->
-
-     
+        <button v-on:click="searchComics()">Search</button> 
+        <div v-for="comic in collectionComics" v-bind:key="comic.id" style="color: gray;">
+          <h3>Title: {{comic.comicTitle}}</h3>
+          <p>{{comic.description}}</p>
+          <img v-bind:src="comic.imageURL" width="40" height="60">
+          <add-to-collection :selectedComic="comic"/>
+        </div>
       </div>
   </div>
 </template>
 
 <script>
 import ComicCollectionService from "@/services/ComicCollectionService.js"
+import AddToCollection from './AddToCollection.vue'
 
 export default {
+  components: { 
+    AddToCollection
+  },
   data() {
         return {
            
@@ -32,14 +39,44 @@ export default {
             searchCategory: ""
         }
   },
-  
-   methods:{
-       loadComics(){
-           //This would pull the comics from the selected collection, and
-           //insert them into the this.comics array
+  methods:{
+    searchComics(){
+        if(this.searchCategory === "Character"){
+           ComicCollectionService.getComicsByCharacter(this.search).then(response=>{
+             this.$store.commit("SET_COMICS", response.data)
+             console.log(response.data);
+           }).catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log("Response Error");
+              console.log(error.response.data);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log("Request Error");
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Misc Error");
+              console.log('Error', error.message);
+            }
+          });
+         }
+         else if(this.searchCategory === "Title"){
+           console.log("TODO");
+         }
+         else if(this.searchCategory === "Author"){
+           console.log("TODO");
+         }
+         else if(this.searchCategory === "Series"){
+           console.log("TODO");
+         }
+         else{
            ComicCollectionService.getComics().then(response=>{
              this.$store.commit("SET_COMICS", response.data)
+             console.log(response.data);
            });
+         }
+
        },
        searchCollection(){
 
@@ -61,17 +98,14 @@ export default {
        collectionComics() {
            //Filtering based solely off of comic name and author.
            //Other fields can be added later
-
-
-
-           
-
             return this.$store.state.comics;
-        
+       },
+       userCollections(){
+         return this.$store.state.collections;
        }
   },
   created (){
-    this.loadComics();
+
   }
 }
   

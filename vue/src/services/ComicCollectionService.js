@@ -27,5 +27,9 @@ export default{
 
     createCollection(collection){
         return http.post('/collection', collection);
+    },
+
+    addComicToCollection(collectionId, comic){
+        return http.post(`/collection/comic/${collectionId}`, comic);
     }
 }

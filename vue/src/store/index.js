@@ -26,7 +26,8 @@ export default new Vuex.Store({
       title: '',
       author:'',
       image:''
-    }
+    },
+    collections: []
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     SET_COMICS(state, data){
       state.comics=data;
+    },
+    SET_COLLECTIONS(state, data){
+      state.collections=data;
     }
   }
 })
