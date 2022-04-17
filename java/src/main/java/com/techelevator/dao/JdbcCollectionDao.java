@@ -21,7 +21,7 @@ public class JdbcCollectionDao implements CollectionDao{
     public int createCollection(String collectionName, int userId, boolean isPrivate) {
 
         String sql = "INSERT INTO collection(collection_name, user_id, private)" +
-                "VALUES(?,?) RETURNING collection_id";
+                "VALUES(?,?,?) RETURNING collection_id";
 
         int collectionId = -1;
 

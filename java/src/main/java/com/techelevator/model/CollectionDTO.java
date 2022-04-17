@@ -4,7 +4,7 @@ public class CollectionDTO {
 
     private String collectionName;
     private int userId;
-    private boolean isPrivate;
+    private boolean isPrivate = false;
 
     public String getCollectionName() {
         return collectionName;
@@ -14,7 +14,7 @@ public class CollectionDTO {
         return userId;
     }
 
-    public boolean isPrivate(){return true;}
+    public boolean isPrivate(){return isPrivate;}
 
     public void setCollectionName(String collectionName) {
         this.collectionName = collectionName;

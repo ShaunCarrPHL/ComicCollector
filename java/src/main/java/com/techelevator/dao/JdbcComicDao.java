@@ -48,9 +48,9 @@ public class JdbcComicDao implements ComicDao{
         List<Comic> comics = new ArrayList<>();
 
         String sql = "SELECT * FROM comic " +
-                     "JOIN comic_collections ON comic.comic_id = comic_collection.comic_id " +
-                     "WHERE collection_id = ? " +
-                     "GROUP BY title;";
+                     "JOIN comic_collection ON comic.comic_id = comic_collection.comic_id " +
+                     "WHERE collection_id = ? ";
+
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, collectionId);
         while (results.next()) {
