@@ -26,7 +26,7 @@ public class MarvelComicService {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    String Api_Base_URL = "http://gateway.marvel.com/v1/public/";
+    String Api_Base_URL = "http://gateway.marvel.com/v1/public";
     String timestamp = String.valueOf(Math.floor(Math.random()));
     String privateKey = "26f65896d570b55683c0ae7e408acddd730e64bd";
     String publicKey = "f574334c33d7534733b1fb8eedd88f7e";
@@ -81,15 +81,7 @@ public class MarvelComicService {
     }
 
 // TODO MAJOR code smell in next two methods...need to rename and combine
-    public String findCharacterId(String id, String jsonString, Integer offset){
-        int indexOfId = jsonString.indexOf(id);
-        int beginIndexOfValue = indexOfId + id.length() + offset;
-        String[] split = jsonString.substring(beginIndexOfValue).split(",");
-        String isolatedId = split[0];
-        return isolatedId;
-    }
-
-    public String findCreatorId(String id, String jsonString, Integer offset){
+    public String findCharacterOrCreatorId(String id, String jsonString, Integer offset){
         int indexOfId = jsonString.indexOf(id);
         int beginIndexOfValue = indexOfId + id.length() + offset;
         String[] split = jsonString.substring(beginIndexOfValue).split(",");
@@ -113,7 +105,7 @@ public class MarvelComicService {
 
         try{
 
-            String exchangePath = Api_Base_URL + "characters?name=" + characterName + "&" + authInfoToString();
+            String exchangePath = Api_Base_URL + "characters?nameStartsWith=" + characterName + "&" + authInfoToString();
             ResponseEntity<String> response =
                     restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             characterJsonString = response.getBody();
@@ -121,7 +113,7 @@ public class MarvelComicService {
             System.out.println(e.getMessage());
         }
 
-        characterId = Integer.valueOf(findCharacterId("\"id\"", characterJsonString,1));
+        characterId = Integer.valueOf(findCharacterOrCreatorId("\"id\"", characterJsonString,1));
 
         return characterId;
     }
@@ -132,14 +124,14 @@ public class MarvelComicService {
 
         try{
 
-            String exchangePath = Api_Base_URL + "creators?name=" + creatorName + "&" + authInfoToString();
+            String exchangePath = Api_Base_URL + "creators?nameStartsWith=" + creatorName + "&" + authInfoToString();
             ResponseEntity<String> response =
                     restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             creatorJsonString = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e){
             System.out.println(e.getMessage());
         }
-        creatorId = Integer.valueOf(findCreatorId("\"id\"", creatorJsonString, 1));
+        creatorId = Integer.valueOf(findCharacterOrCreatorId("\"id\"", creatorJsonString, 1));
         return creatorId;
     }
 
@@ -148,13 +140,13 @@ public class MarvelComicService {
 
         List<String> listOfComicInfo = new ArrayList<>();
 
-        String id = findCharacterId("\"id\"", comicJsonString, 1);
+        String id = findCharacterOrCreatorId("\"id\"", comicJsonString, 1);
         listOfComicInfo.add(id);
 
         String title = pathFinder("\"title\"", comicJsonString,2);
         listOfComicInfo.add(title);
 
-        String description = pathFinder("\"description\"", comicJsonString,2);
+        String description = pathFinder("\"description\"", comicJsonString,1);
         listOfComicInfo.add(description);
 
         String path = pathFinder("\"path\"", comicJsonString,2);
@@ -165,17 +157,18 @@ public class MarvelComicService {
 
         return listOfComicInfo;
     }
+
     //TODO Extract Creator info from JSON
-    public List<String> extractCreatorInfo(String jsonString){
+    /*public List<String> extractCreatorInfo(String jsonString){
         List<String> listOfCreatorInfo = new ArrayList<>();
 
-        String id = findCreatorId("\"id\"", jsonString, 1);
+        String id = findCharacterOrCreatorId("\"id\"", jsonString, 1);
         listOfCreatorInfo.add(id);
 
         String fullName;
 
         return listOfCreatorInfo;
-    }
+    }*/
 
     public List<MarvelComic> getComicListByCharacterName(String characterName){
 
@@ -198,6 +191,7 @@ public class MarvelComicService {
     }
 
     public List<MarvelComic> getAllComics(){
+
         List<MarvelComic> listComics = new ArrayList<>();
         String allComics = null;
 
@@ -215,7 +209,7 @@ public class MarvelComicService {
 
         return comicsJsonString(allComics, listComics);
     }
-// TODO get a list of comics by creator name -- isn't working properly yet
+
     public List<MarvelComic> getComicByCreatorName(String creatorName){
 
         List<MarvelComic> listComics = new ArrayList<>();
@@ -223,7 +217,26 @@ public class MarvelComicService {
         String listComicsJsonString = null;
 
         try{
-            String path = Api_Base_URL + "/creators/" + creatorId + "/comics" + "?&" + authInfoToString();
+            String path = Api_Base_URL + "/creators/" + creatorId + "/comics" + "?" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getComicByTitle(String title){
+
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/comics?titleStartsWith=" + title + "&" + authInfoToString();
 
             ResponseEntity<String> response =
                     restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);

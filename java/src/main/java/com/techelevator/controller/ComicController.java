@@ -1,14 +1,12 @@
 package com.techelevator.controller;
-import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.util.Arrays;
+
 import java.util.List;
 
 import com.techelevator.dao.*;
 import com.techelevator.model.Comic;
 import com.techelevator.model.MarvelModel.MarvelComic;
 import com.techelevator.services.MarvelComicService;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class ComicController {
 
     String Api_Base_URL = "http://gateway.marvel.com/v1/public";
-
-
 
     private ComicDao comicDao;
     private CollectionDao collectionDao;
@@ -35,8 +31,7 @@ public class ComicController {
         this.marvelComicService = marvelComicService;
     }
 
-
-   @RequestMapping(path = "/comics/mycomic/{comicId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/comics/mycomic/{comicId}", method = RequestMethod.GET)
     public Comic getComicById(@PathVariable int comicId) {
         return comicDao.getComicById(comicId);
     }
@@ -53,17 +48,14 @@ public class ComicController {
 
     @RequestMapping(path = "/characters/name/{characterName}", method = RequestMethod.GET)
     public List<MarvelComic> getAllComicsByCharacterName(@PathVariable String characterName) {
-        return marvelComicService.getComicListByCharacterName(characterName);
-    }
-// TODO Not yet functional
-    @RequestMapping(path = "/creators/name/{creatorName}/", method = RequestMethod.GET)
+        return marvelComicService.getComicListByCharacterName(characterName);}
+
+    @RequestMapping(path = "/creators/name/{creatorName}", method = RequestMethod.GET)
     public List<MarvelComic> getComicsByCreatorName(@PathVariable String creatorName) {
-        return marvelComicService.getComicByCreatorName(creatorName);
-    }
+        return marvelComicService.getComicByCreatorName(creatorName);}
 
-
-
-
-
+    @RequestMapping(path = "/comic/bytitle/{title}", method = RequestMethod.GET)
+    public List<MarvelComic> getComicsByTitle(@PathVariable String title) {
+        return marvelComicService.getComicByTitle(title);}
 
 }
