@@ -25,7 +25,7 @@
        <add-collection/> 
 
        <h3>Collections</h3>
-       <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p>
+      <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p>
       </div>
     </div>
       
@@ -35,6 +35,7 @@
 import NewComic from "@/views/NewComic.vue"
 import AddCollection from '../views/AddCollection.vue'
 import ComicCollectionService from '../services/ComicCollectionService'
+//import Comic from "@/components/Comic.vue"
 
 
 export default {
@@ -56,24 +57,24 @@ export default {
                     public: false
                 }
             ],
-            comics: [
-                {
-                    comicTitle: "Marvelous Marvel",
-                    marvelId: 111,
-                    comicId: 123,
-                    author: "Neil Armstrong",
-                    imageURL: "http://i.annihil.us/u/prod/marvel/i/mg/c/60/4bc69f11baf75/portrait_uncanny.jpg",
-                    releaseDate: "09/23/1997",
-                    description: "A marvel of the human experience! And the struggles of confusing tax brackets! Find out!! Now!!!"
-                },
-                {
-                    comicTitle: "The Amazing Spider-Man #1",
-                    author: "Stan Lee"
-                },
-                {
-                    comicTitle: "The Fantastic Four #4",
-                    author: "Jack Kirby"
-                }
+            comics: [ 
+                /*  {
+                     comicTitle: "Marvelous Marvel",
+                     marvelId: 111,
+                     comicId: 123,
+                     author: "Neil Armstrong",
+                     imageURL: "http://i.annihil.us/u/prod/marvel/i/mg/c/60/4bc69f11baf75/portrait_uncanny.jpg",
+                     releaseDate: "09/23/1997",
+                     description: "A marvel of the human experience! And the struggles of confusing tax brackets! Find out!! Now!!!"
+                 },
+                 {
+                     comicTitle: "The Amazing Spider-Man #1",
+                     author: "Stan Lee"
+                 },
+                 {
+                     comicTitle: "The Fantastic Four #4",
+                     author: "Jack Kirby"
+                 } */
             ],
             selectedCollection: {
                 title: "Placeholder",
@@ -92,11 +93,16 @@ export default {
    components: {
       NewComic,
       AddCollection
+      //Comic
    },
    methods:{
        loadComics(){
            //This would pull the comics from the selected collection, and
            //insert them into the this.comics array
+           ComicCollectionService.getComicsInCollection(this.$store.state.collection.id).then(response => {
+               this.selectedCollection.getComicsInCollection.comics = response.data;
+            //    this.$store.commit('SET_COMICS', response.data)
+           });
        },
        loadCollections(){
            //Pulling in all collections owned by the user
