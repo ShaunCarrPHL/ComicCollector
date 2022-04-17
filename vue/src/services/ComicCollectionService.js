@@ -32,5 +32,8 @@ export default{
     addComicToCollection(collectionId, comic){
         console.log(collectionId);
         return http.post(`/collection/comic/${collectionId}`, comic);
+    },
+    getComicsInCollection(collectionId){
+        return http.get(`/collection/comic/${collectionId}`);
     }
 }
