@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import ComicCollectionService from '../services/ComicCollectionService'
+
 export default {
     data () {
         return{
@@ -21,11 +23,13 @@ export default {
         addToSelectedCollection(){
             //Add the comic to the selected collection
             console.log("Collection: " + this.targetCollection.collectionId);
-            console.log("Comic: " + this.selectedComic.comicTitle);
+            console.log(this.selectedComic);
             console.log("TODO");
 
             //Will need to run this axios call...
-            //addComicToCollection(targetCollection.collectionId, comic)
+            ComicCollectionService.addComicToCollection(this.targetCollection.collectionId, this.selectedComic).then(response =>{
+                console.log(response);
+            });
         }
     },
     computed: {

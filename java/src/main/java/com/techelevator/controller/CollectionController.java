@@ -38,8 +38,8 @@ public class CollectionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path = "/collection/comic/{collectionId}", method = RequestMethod.POST)
-    public boolean addComicToCollection(@RequestBody ComicDTO newComic) throws Exception {
-        return collectionDao.addComicToCollection(newComic.getMarvelId(), newComic.getComicTitle(), newComic.getImageUrl(), newComic.getDescription(), newComic.getCollectionId());
+    public boolean addComicToCollection(@RequestBody ComicDTO newComic, @PathVariable int collectionId) throws Exception {
+        return collectionDao.addComicToCollection(newComic.getMarvelId(), newComic.getComicTitle(), newComic.getImageUrl(), newComic.getDescription(), collectionId);
     }
 
     @RequestMapping(path ="/collection/mycollection/{collectionId}", method = RequestMethod.PUT)

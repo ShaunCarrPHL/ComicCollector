@@ -102,7 +102,7 @@ public class JdbcCollectionDao implements CollectionDao{
             System.out.println(e.getMessage());
         }
 
-        if(comicId != -1){
+        if(comicId == -1){
             System.out.println("Adding comic to comic table failed.");
         }
 
