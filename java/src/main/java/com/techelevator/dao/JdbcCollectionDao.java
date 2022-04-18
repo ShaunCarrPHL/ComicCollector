@@ -82,7 +82,7 @@ public class JdbcCollectionDao implements CollectionDao{
         return collections;
     }
 
-    //TODO check to see if different users can add the same comics to their collection
+
     @Override
     public boolean addComicToCollection(int marvelId, String comicTitle, String imageUrl, String description, int collectionId) {
 
@@ -108,8 +108,6 @@ public class JdbcCollectionDao implements CollectionDao{
 
         sql =   "INSERT INTO comic_collection(collection_id, comic_id)" +
                 "SELECT ?,?" +
-                "WHERE NOT EXISTS" +
-                "(SELECT comic_id FROM comic_collection WHERE comic_id = ?)" +
                 "RETURNING collection_id;";
 
         int collectionIdCheck = -1;

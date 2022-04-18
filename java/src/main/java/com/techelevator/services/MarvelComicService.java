@@ -80,7 +80,7 @@ public class MarvelComicService {
         return auth;
     }
 
-// TODO MAJOR code smell in next two methods...need to rename and combine
+
     public String findCharacterOrCreatorId(String id, String jsonString, Integer offset){
         int indexOfId = jsonString.indexOf(id);
         int beginIndexOfValue = indexOfId + id.length() + offset;
@@ -157,18 +157,6 @@ public class MarvelComicService {
 
         return listOfComicInfo;
     }
-
-    //TODO Extract Creator info from JSON
-    /*public List<String> extractCreatorInfo(String jsonString){
-        List<String> listOfCreatorInfo = new ArrayList<>();
-
-        String id = findCharacterOrCreatorId("\"id\"", jsonString, 1);
-        listOfCreatorInfo.add(id);
-
-        String fullName;
-
-        return listOfCreatorInfo;
-    }*/
 
     public List<MarvelComic> getComicListByCharacterName(String characterName){
 
