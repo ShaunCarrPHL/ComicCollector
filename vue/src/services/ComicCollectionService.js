@@ -21,6 +21,10 @@ export default{
         return http.get(`/comic/bytitle/${title}`);
     },
 
+    getComicsBySeries(series){
+        return http.get(`/comic/byseries/${series}`);
+    },
+
     getComicById(comicId){
         return http.get(`/comics/${comicId}`);
     },

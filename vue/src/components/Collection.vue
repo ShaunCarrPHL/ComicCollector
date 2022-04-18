@@ -4,19 +4,16 @@
       <div class="collection">
         <h2>My "{{selectedCollection.collectionName}}" Collection</h2>
         <!--TODO: add v-for to iterate through comics for display-->
-       Add Comic to Collection:<new-comic /> 
        <!--TODO: add dropdown menu to select collection for comic-->
         <table id="comicList">
           <thead>
             <tr>
                 <th>Title</th>
-                <th>Author</th>
             </tr>
           </thead>
           <tbody>
               <tr v-for='comic in comicsInCollection' v-bind:key='comic.comicTitle'>
                   <td>{{comic.comicTitle}}</td>
-                  <td>{{comic.author}}</td>
               </tr>
           </tbody>
       </table>
@@ -33,7 +30,7 @@
 </template>
 
 <script>
-import NewComic from "@/views/NewComic.vue"
+//import NewComic from "@/views/NewComic.vue"
 import AddCollection from '../views/AddCollection.vue'
 import ComicCollectionService from '../services/ComicCollectionService'
 import CollectionLink from './CollectionLink.vue'
@@ -90,7 +87,7 @@ export default {
         };
     },
    components: {
-      NewComic,
+     //NewComic,
       AddCollection,
       CollectionLink
       //Comic

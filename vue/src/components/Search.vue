@@ -102,7 +102,24 @@ export default {
           });
          }
          else if(this.searchCategory === "Series"){
-           console.log("TODO");
+           ComicCollectionService.getComicsBySeries(this.search).then(response=>{
+             this.$store.commit("SET_COMICS", response.data)
+             console.log(response.data);
+           }).catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log("Response Error");
+              console.log(error.response.data);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log("Request Error");
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Misc Error");
+              console.log('Error', error.message);
+            }
+          });
          }
          else{
            ComicCollectionService.getComics().then(response=>{
