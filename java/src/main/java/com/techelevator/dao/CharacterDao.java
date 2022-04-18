@@ -9,5 +9,4 @@ public interface CharacterDao {
     List<Character> ListAllCharactersInComic(int comicId);
     Character getComicByCharacterName(String name);
     Character getCharacterById(int characterId);
-
 }

@@ -1,4 +1,5 @@
 package com.techelevator.dao;
+
 import com.techelevator.model.Collection;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcCollectionDao implements CollectionDao{
+public class JdbcCollectionDao implements CollectionDao {
     private JdbcTemplate jdbcTemplate;
     private JdbcComicDao jdbcComicDao;
-    public JdbcCollectionDao(JdbcTemplate jdbctemplate){
+
+    public JdbcCollectionDao(JdbcTemplate jdbctemplate) {
         this.jdbcTemplate = jdbctemplate;
     }
 
@@ -27,10 +29,10 @@ public class JdbcCollectionDao implements CollectionDao{
 
         try {
             collectionId = jdbcTemplate.queryForObject(sql, Integer.class, collectionName, userId, isPrivate);
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             System.out.println(e.getMessage());
         }
-        if(collectionId != -1){
+        if (collectionId != -1) {
             return collectionId;
         }
 
@@ -38,16 +40,12 @@ public class JdbcCollectionDao implements CollectionDao{
         return collectionId;
     }
 
-    public void updateCollection(Collection collection){
-        String sql ="UPDATE collection SET collection_name = ?, user_id = ?, private = ?" +
+    public void updateCollection(Collection collection) {
+        String sql = "UPDATE collection SET collection_name = ?, user_id = ?, private = ?" +
                 "WHERE collection_id = ?;";
-            jdbcTemplate.update(sql,collection.getCollectionName(),collection.getUserId(),collection.isPrivate(),collection.getCollectionId());
+        jdbcTemplate.update(sql, collection.getCollectionName(), collection.getUserId(), collection.isPrivate(), collection.getCollectionId());
 
     }
-
-
-
-
 
     @Override
     public List<Collection> listAllCollections() {
@@ -56,7 +54,7 @@ public class JdbcCollectionDao implements CollectionDao{
         String sql = "SELECT * FROM collection WHERE private = false;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        if (results.next()){
+        if (results.next()) {
             Collection collection = mapRowToCollections(results);
             collections.add(collection);
 
@@ -65,7 +63,9 @@ public class JdbcCollectionDao implements CollectionDao{
     }
 
     @Override
-    public List<Collection> listAllPublicCollections() {return null;}
+    public List<Collection> listAllPublicCollections() {
+        return null;
+    }
 
     @Override
     public List<Collection> getCollectionsByUserId(int userId) {
@@ -74,23 +74,22 @@ public class JdbcCollectionDao implements CollectionDao{
 
         String sql = "SELECT * FROM collection WHERE user_id = ?;";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,userId);
-        while (results.next()){
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while (results.next()) {
             Collection collection = mapRowToCollections(results);
             collections.add(collection);
         }
         return collections;
     }
 
-
     @Override
     public boolean addComicToCollection(int marvelId, String comicTitle, String imageUrl, String description, int collectionId) {
 
-        String sql ="INSERT INTO comic(marvel_id, title, image, description)" +
-                    "SELECT ?,?,?,?" +
-                    "WHERE NOT EXISTS" +
-                    "(SELECT marvel_id FROM comic WHERE marvel_id = ?)" +
-                    "RETURNING comic_id;";
+        String sql = "INSERT INTO comic(marvel_id, title, image, description)" +
+                "SELECT ?,?,?,?" +
+                "WHERE NOT EXISTS" +
+                "(SELECT marvel_id FROM comic WHERE marvel_id = ?)" +
+                "RETURNING comic_id;";
 
         int comicId = -1;
 
@@ -100,7 +99,7 @@ public class JdbcCollectionDao implements CollectionDao{
             System.out.println(e.getMessage());
         }
 
-        if(comicId == -1){
+        if (comicId == -1) {
 
             sql = "SELECT comic_id FROM comic WHERE marvel_id = ?;";
 
@@ -111,18 +110,18 @@ public class JdbcCollectionDao implements CollectionDao{
             }
         }
 
-        sql =   "INSERT INTO comic_collection(collection_id, comic_id)" +
+        sql = "INSERT INTO comic_collection(collection_id, comic_id)" +
                 "SELECT ?,?" +
                 "RETURNING collection_id;";
 
         int collectionIdCheck = -1;
 
-        try{
-             collectionIdCheck = jdbcTemplate.queryForObject(sql, Integer.class, collectionId, comicId);
-        } catch(DataAccessException e){
+        try {
+            collectionIdCheck = jdbcTemplate.queryForObject(sql, Integer.class, collectionId, comicId);
+        } catch (DataAccessException e) {
             System.out.println(e.getMessage() + " Failed to add comic to collection");
         }
-        if(collectionIdCheck != -1){
+        if (collectionIdCheck != -1) {
             return true;
         }
 
@@ -142,13 +141,13 @@ public class JdbcCollectionDao implements CollectionDao{
         return collection;
     }
 
-private Collection mapRowToCollections(SqlRowSet rs) {
+    private Collection mapRowToCollections(SqlRowSet rs) {
         Collection collection = new Collection();
         collection.setCollectionId(rs.getInt("collection_id"));
         collection.setCollectionName(rs.getString("collection_name"));
         collection.setUserId(rs.getInt("user_id"));
         collection.setPrivate(false); //TODO NOT SURE IF THIS IS CORRECT
         return collection;
-}
+    }
 
 }
