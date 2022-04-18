@@ -49,14 +49,18 @@ public class ComicController {
     @RequestMapping(path = "/characters/name/{characterName}", method = RequestMethod.GET)
     public List<MarvelComic> getAllComicsByCharacterName(@PathVariable String characterName) {
         return marvelComicService.getComicListByCharacterName(characterName);}
-// List comics by creator
+// List comics by creator provided
     @RequestMapping(path = "/creators/name/{creatorName}", method = RequestMethod.GET)
     public List<MarvelComic> getComicsByCreatorName(@PathVariable String creatorName) {
         return marvelComicService.getComicByCreatorName(creatorName);}
-// Search and List comics by title provided
+// List comics by title provided
     @RequestMapping(path = "/comic/bytitle/{title}", method = RequestMethod.GET)
     public List<MarvelComic> getComicsByTitle(@PathVariable String title) {
         return marvelComicService.getComicByTitle(title);}
+// List comics by series provided
+    @RequestMapping(path = "/comic/byseries/{seriesName}", method = RequestMethod.GET)
+    public List<MarvelComic> getComicsBySeries(@PathVariable String seriesName) {
+        return marvelComicService.getComicBySeriesName(seriesName);}
 // List comics that came out this month so far
     @RequestMapping(path ="/comics/date/thisMonth", method = RequestMethod.GET)
     public List<MarvelComic> listThisMonthsComics() {return marvelComicService.getThisMonthsComics();}

@@ -95,15 +95,20 @@ public class JdbcCollectionDao implements CollectionDao{
         int comicId = -1;
 
         try {
-
             comicId = jdbcTemplate.queryForObject(sql, Integer.class, marvelId, comicTitle, imageUrl, description, marvelId);
-
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
         }
 
         if(comicId == -1){
-            System.out.println("Adding comic to comic table failed.");
+
+            sql = "SELECT comic_id FROM comic WHERE marvel_id = ?;";
+
+            try {
+                comicId = jdbcTemplate.queryForObject(sql, Integer.class, marvelId);
+            } catch (DataAccessException e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         sql =   "INSERT INTO comic_collection(collection_id, comic_id)" +

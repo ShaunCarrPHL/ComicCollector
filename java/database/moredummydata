@@ -6,12 +6,32 @@ WHERE NOT EXISTS (SELECT marvel_id FROM comic WHERE marvel_id = 441)
 RETURNING comic_id;
 
 INSERT INTO comic_collection(collection_id, comic_id)
-SELECT 2,5 WHERE NOT EXISTS (SELECT comic_id FROM comic_collection WHERE comic_id = 5) RETURNING collection_id;
+SELECT 3,4  RETURNING collection_id;
 
-SELECT user_id FROM collection WHERE collection_id = 2;
+SELECT user_id FROM collection WHERE collection_id = 4;
+
+select * from comic_collection
+
+
 
 SELECT * FROM users
 mrwow is 3
+witta 4
 
+SELECT username 
+FROM users 
+JOIN collection ON users.user_id = collection.user_id 
+JOIN comic_collection ON collection.collection_id = comic_collection.collection_id
+SELECT COUNT(collection.comic_id) AS amount FROM collection WHERE collection.user_id = users.user_id
+ORDER BY amount;
+
+SELECT COUNT(comic_id) as amount, u.username
+FROM collection as c
+JOIN comic_collection AS cc ON c.collection_id = cc.collection_id
+JOIN users AS u ON c.user_id = u.user_id
+GROUP BY u.username
+ORDER BY amount DESC
+
+INSERT INTO collection(collection_name, user_id, private) VALUES('hot stuff', 4, false) RETURNING collection_id
 
 
