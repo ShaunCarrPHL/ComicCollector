@@ -105,7 +105,7 @@ public class MarvelComicService {
 
         try{
 
-            String exchangePath = Api_Base_URL + "characters?nameStartsWith=" + characterName + "&" + authInfoToString();
+            String exchangePath = Api_Base_URL + "/characters?nameStartsWith=" + characterName + "&" + authInfoToString();
             ResponseEntity<String> response =
                     restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             characterJsonString = response.getBody();
@@ -124,7 +124,7 @@ public class MarvelComicService {
 
         try{
 
-            String exchangePath = Api_Base_URL + "creators?nameStartsWith=" + creatorName + "&" + authInfoToString();
+            String exchangePath = Api_Base_URL + "/creators?nameStartsWith=" + creatorName + "&" + authInfoToString();
             ResponseEntity<String> response =
                     restTemplate.exchange(exchangePath, HttpMethod.GET, makeHeaders(), String.class);
             creatorJsonString = response.getBody();
@@ -225,6 +225,24 @@ public class MarvelComicService {
 
         try{
             String path = Api_Base_URL + "/comics?titleStartsWith=" + title + "&" + authInfoToString();
+
+            ResponseEntity<String> response =
+                    restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
+            listComicsJsonString = response.getBody();
+
+        } catch(RestClientResponseException | ResourceAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+        return comicsJsonString(listComicsJsonString, listComics);
+    }
+
+    public List<MarvelComic> getComicBySeriesName(String seriesName){
+        List<MarvelComic> listComics = new ArrayList<>();
+        String listComicsJsonString = null;
+
+        try{
+            String path = Api_Base_URL + "/series?titleStartsWith=" + seriesName + "&" + authInfoToString();
 
             ResponseEntity<String> response =
                     restTemplate.exchange(path, HttpMethod.GET, makeHeaders(), String.class);
