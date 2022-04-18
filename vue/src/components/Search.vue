@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="searchPage">
       <div id="search">
        <input type="text" v-model="search" placeholder="Search" />
        
@@ -8,11 +8,11 @@
         </select>
         <button v-on:click="searchComics()">Search</button> 
         <div id="parentDiv">
-        <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
-          <h3>Title: {{comic.comicTitle}}</h3>
-          <p>{{comic.description}}</p>
-          <img v-bind:src="comic.imageURL" width="40" height="60">
-          <add-to-collection :selectedComic="comic"/>
+          <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
+            <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
+            <p id="description">{{comic.description}}</p>
+            <img id="image" v-bind:src="comic.imageURL" width="40" height="60">
+            <add-to-collection :selectedComic="comic"/>
           </div>
         </div>
       </div>
@@ -170,7 +170,12 @@ export default {
 </script>
 
 <style>
-div#search{
+div#searchPage{
+   display: grid;
+   grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
+   grid-template-areas: 
+   "search search search search search"
+   "parentDiv parentDiv parentDiv parentDiv parentDiv";
    background-image: linear-gradient(to right,rgba(255,0,0,0), rgba(255,0,0,1));
     opacity: 0.7;
     height: 85vh;
@@ -178,9 +183,11 @@ div#search{
     color: white;
     font-size: 20px;
     
+    
 }
 
 div#parentDiv{
+  grid-area: parentDiv;
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
@@ -190,7 +197,15 @@ div#parentDiv{
 div#listComics{
   font-size: 12px;
   outline: 5px dotted green;
+}
+
+
+
+@media screen and (max-height: 700px) {
   
+  #searchPage{
+
+  }
 }
 
 </style>

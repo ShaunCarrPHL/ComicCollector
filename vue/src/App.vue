@@ -163,11 +163,13 @@ div#content {
   }
 }
 
-@media screen and (max-width: 400px) {
-  .app {
+@media screen and (max-height: 700px) {
+  #app {
     
   }
 }
+
+
 
 
 </style>
