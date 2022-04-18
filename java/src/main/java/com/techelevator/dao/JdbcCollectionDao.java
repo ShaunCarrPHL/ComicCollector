@@ -118,7 +118,7 @@ public class JdbcCollectionDao implements CollectionDao{
         int collectionIdCheck = -1;
 
         try{
-             collectionIdCheck = jdbcTemplate.queryForObject(sql, Integer.class, collectionId, comicId, comicId);
+             collectionIdCheck = jdbcTemplate.queryForObject(sql, Integer.class, collectionId, comicId);
         } catch(DataAccessException e){
             System.out.println(e.getMessage() + " Failed to add comic to collection");
         }
