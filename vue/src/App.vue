@@ -1,23 +1,24 @@
 <template>
   <div id="app">
     
-    <div id="nav">
-    <!--   <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+<!--     <div id="nav">
+    <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-      <router-link v-bind:to="{name: 'login'}"></router-link> -->
-      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <router-link v-bind:to="{name: 'login'}"></router-link> 
+       TESTING: MOVED TO INDEX.HTML 
+     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet"> 
+    </div> -->
       
     
     <div id='title'>
-      <div> A World Of Marvels </div>
+      <h1 id="maintitle"> A World Of Marvels </h1>
     
       <div class="menu">
         <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-          <router-link v-bind:to="{name: 'login'}"></router-link>
-         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-bind:to="{name: 'login'}"></router-link>
+        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         <router-link v-bind:to="{name: 'collection'}" v-if="$store.state.token != ''">Collection</router-link>
         <router-link v-bind:to="{name: 'contact'}">Contact</router-link>
         <router-link v-bind:to="{name: 'search'}">Search</router-link>
@@ -68,6 +69,10 @@ export default {
   color: white;
 }
 
+#header {
+  grid-area: header;
+}
+
 #footer{
   grid-area: app-footer;
 
@@ -78,19 +83,25 @@ div#nav{
   font-size: 20px;
 }
 
-div#title{
-  @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+#title {
   grid-area: header ;
+
+}
+
+#maintitle{
+
+  
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 100px;
   font-family: 'Bangers', cursive;
-  height: 15vh;
-  padding-top: 10vh;
+  /*height: 15vh;*/
+  /* padding-top: 10vh;*/
   border-radius: 25px;
   background: rgb(150, 9, 9);
   padding: 20px;
+  /*max-width: 90vh;*/
 }
 
 /*Fix the grid area of app*/
@@ -136,7 +147,7 @@ a{
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div#content {
-   grid-area: app-content;
+  grid-area: app-content;
   padding: 1px 16px;
   height: 800px;
   background-size: cover;
@@ -146,13 +157,17 @@ div#content {
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
-  .menu {
+  #title {
     width: 100%;
     height: auto;
     position: relative;
   }
   .menu a {float: left;}
   div.content {margin-left: 0;}
+
+  #title>h1 {
+    font-size: 30px;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */

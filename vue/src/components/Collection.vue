@@ -19,10 +19,10 @@
       </table>
       </div>
       <div id="addCollection">
-       <add-collection/> 
+       <add-collection /> 
 
        <h3>Collections</h3>
-       <collection-link v-for="collection in collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
+       <collection-link v-for="collection in this.$store.state.collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
       <!-- <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p> -->
       </div>
     </div>

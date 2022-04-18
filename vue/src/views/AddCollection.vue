@@ -20,12 +20,31 @@ export default {
         collectionName: "",
         private: "",
         userId: this.$store.state.user.id
-      }
+      },
+      newCollectionId: 0,
     }
   },
   methods:{
     createCollection(){
-      ComicCollectionService.createCollection(this.collection);
+      
+      if(this.collection.collectionName){
+      
+      ComicCollectionService.createCollection(this.collection)
+        .then(addedCollectionID => {
+            this.newCollectionId = addedCollectionID
+            ComicCollectionService.getCollections(this.$store.state.user.id)
+              .then(updatedCollections => {
+                this.$store.commit('SET_COLLECTIONS', updatedCollections.data);
+                this.collection = {};
+              }
+            
+              )
+
+            
+        }
+
+      );
+      }
     }
   }
 }
