@@ -13,5 +13,4 @@ public void updateCollection(Collection collection);
 Collection getCollectionById(int collectionId);
 int createCollection(String collectionName, int userId, boolean isPrivate);
 boolean addComicToCollection(int marvelId, String comicTitle, String imageUrl, String description, int collectionId);
-
 }
