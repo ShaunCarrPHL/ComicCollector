@@ -7,11 +7,13 @@
               <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
         </select>
         <button v-on:click="searchComics()">Search</button> 
-        <div v-for="comic in collectionComics" v-bind:key="comic.id" style="color: gray;">
+        <div id="parentDiv">
+        <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
           <h3>Title: {{comic.comicTitle}}</h3>
           <p>{{comic.description}}</p>
           <img v-bind:src="comic.imageURL" width="40" height="60">
           <add-to-collection :selectedComic="comic"/>
+          </div>
         </div>
       </div>
   </div>
@@ -168,5 +170,27 @@ export default {
 </script>
 
 <style>
+div#search{
+   background-image: linear-gradient(to right,rgba(255,0,0,0), rgba(255,0,0,1));
+    opacity: 0.7;
+    height: 85vh;
+    border-radius: 25px;
+    color: white;
+    font-size: 20px;
+    
+}
+
+div#parentDiv{
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  height: 60vh;
+}
+div#listComics{
+  font-size: 12px;
+  outline: 5px dotted green;
+  
+}
 
 </style>

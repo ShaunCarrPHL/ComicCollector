@@ -164,7 +164,7 @@ export default {
     background-image: linear-gradient(to right,rgba(255,0,0,0), rgba(255,0,0,1));
     opacity: 0.7;
     text-align: center;
-    height: 110vh;
+    height: 85vh;
     border-radius: 25px;
     color: white;
     font-size: 20px;

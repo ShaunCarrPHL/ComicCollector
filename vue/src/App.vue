@@ -163,6 +163,11 @@ div#content {
   }
 }
 
-/* TODO: Change router-link colors to red/yellow */
+@media screen and (max-width: 400px) {
+  .app {
+    
+  }
+}
+
 
 </style>
