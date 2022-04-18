@@ -13,8 +13,12 @@ export default{
         return http.get(`/characters/name/${characterName}`);
     },
 
+    getComicsByAuthor(author){
+        return http.get(`/creators/name/${author}`);
+    },
+
     getComicsByTitle(title){
-        return http.get(`/comics/${title}`);
+        return http.get(`/comic/bytitle/${title}`);
     },
 
     getComicById(comicId){
@@ -34,6 +38,6 @@ export default{
         return http.post(`/collection/comic/${collectionId}`, comic);
     },
     getComicsInCollection(collectionId){
-        return http.get(`/collection/comic/${collectionId}`);
+        return http.get(`/collection/mycollection/mycomics/${collectionId}`);
     }
 }

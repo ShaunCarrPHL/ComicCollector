@@ -2,7 +2,7 @@
   <div id="main">
       
       <div class="collection">
-        <h2>My "{{selectedCollection.title}}" Collection</h2>
+        <h2>My "{{selectedCollection.collectionName}}" Collection</h2>
         <!--TODO: add v-for to iterate through comics for display-->
        Add Comic to Collection:<new-comic /> 
        <!--TODO: add dropdown menu to select collection for comic-->
@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-              <tr v-for='comic in comics' v-bind:key='comic.comicTitle'>
+              <tr v-for='comic in comicsInCollection' v-bind:key='comic.comicTitle'>
                   <td>{{comic.comicTitle}}</td>
                   <td>{{comic.author}}</td>
               </tr>
@@ -25,7 +25,8 @@
        <add-collection/> 
 
        <h3>Collections</h3>
-      <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p>
+       <collection-link v-for="collection in collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
+      <!-- <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p> -->
       </div>
     </div>
       
@@ -35,6 +36,7 @@
 import NewComic from "@/views/NewComic.vue"
 import AddCollection from '../views/AddCollection.vue'
 import ComicCollectionService from '../services/ComicCollectionService'
+import CollectionLink from './CollectionLink.vue'
 //import Comic from "@/components/Comic.vue"
 
 
@@ -76,10 +78,7 @@ export default {
                      author: "Jack Kirby"
                  } */
             ],
-            selectedCollection: {
-                title: "Placeholder",
-                public: true
-            },
+            selectedCollection: "",
             search: "",
             searchCategories: [
                 "Title",
@@ -92,7 +91,8 @@ export default {
     },
    components: {
       NewComic,
-      AddCollection
+      AddCollection,
+      CollectionLink
       //Comic
    },
    methods:{
@@ -106,12 +106,14 @@ export default {
        },
        loadCollections(){
            //Pulling in all collections owned by the user
-           console.log(this.$store.state.user.id);
            ComicCollectionService.getCollections(this.$store.state.user.id).then(response => {
                this.collections = response.data;
                this.$store.commit("SET_COLLECTIONS", response.data)
            });
 
+       },
+       setActiveCollection(collection){
+           this.selectedCollection = collection;
        }
    },
    created(){
@@ -141,6 +143,9 @@ export default {
         //    return this.comics.filter(comic => {
         //        return comic.author.toLowerCase().indexOf(this.search.toLowerCase()) != -1;
         //    });
+       },
+       comicsInCollection(){
+           return this.$store.state.activeCollectionComics;
        }
 
 

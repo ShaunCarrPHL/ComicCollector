@@ -31,7 +31,7 @@ CREATE TABLE comic (
 	comic_id serial,
 	marvel_id int NOT NULL,
 	image varchar(300),
-	title varchar(50) NOT NULL,
+	title varchar(200) NOT NULL,
 	description varchar(2000),
 	CONSTRAINT PK_comic PRIMARY KEY (comic_id)
 );
