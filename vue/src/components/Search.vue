@@ -9,11 +9,18 @@
         <button v-on:click="searchComics()">Search</button> 
         </div>
         <div id="parentDiv">
-          <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
+          <div id ="listComics" v-for="comic in collectionComics" 
+            v-bind:key="comic.id" 
+           
+            :title="comic.comicTitle"
+            style="color: white;">
             <!-- <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
             <p id="description">{{comic.description}}</p> -->
-            <img id="image" v-bind:src="comic.imageURL" width="60" height="75">
-            <add-to-collection :selectedComic="comic"/>
+
+            <img class="comicCover" v-bind:src="comic.imageURL">
+
+            <add-to-collection :selectedComic="comic" class="addControl"/>
+
         </div>
       </div>
   </div>
@@ -42,6 +49,7 @@ export default {
         }
   },
   methods:{
+
     searchComics(){
         if(this.searchCategory === "Character"){
            ComicCollectionService.getComicsByCharacter(this.search).then(response=>{
@@ -170,6 +178,8 @@ export default {
 </script>
 
 <style>
+
+
 div#searchPage{
    display: grid;
    grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
