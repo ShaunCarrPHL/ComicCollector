@@ -1,7 +1,7 @@
 <template>
   <div>
     <select v-model="targetCollection">
-        <option v-for="collection in availableCollections" v-bind:key="collection.collectionName" :value="collection">{{collection.collectionName}}</option>
+        <option class="optionLabel" v-for="collection in availableCollections" v-bind:key="collection.collectionName" :value="collection">{{collection.collectionName}}</option>
     </select>
     <button v-on:click="addToSelectedCollection">Add to Collection</button>
   </div>
@@ -41,5 +41,22 @@ export default {
 </script>
 
 <style>
+@media screen and (max-width: 700px) and (min-width: 400px){
+    #main{
+        grid-template-areas:
+        "collection"
+        "addCollection";
+        grid-template-columns: 1fr;
+    }
+    .optionLabel{
+        font-size: 25px;
+    }
+    #comicList{
+        font-size: 20px;
+    }
+}
+    .optionLabel{
+        font-size: 35px;
 
+    }
 </style>

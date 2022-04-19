@@ -1,17 +1,5 @@
 <template>
-  <div id="app">
-    
-<!--     <div id="nav">
-    <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-      <router-link v-bind:to="{name: 'login'}"></router-link> 
-       TESTING: MOVED TO INDEX.HTML 
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet"> 
-    </div> -->
-      
-    
+  <div id="app">    
     <div id='title'>
       <h1 id="maintitle"> A World Of Marvels </h1>
     
@@ -25,10 +13,10 @@
       </div>
     </div>
     
-
-    
     <div id="content" :style="{'background-image':'url(https://wallpaperaccess.com/full/430398.jpg)'}">
       <router-view />
+      
+
     </div>
 
     <div id="footer">
@@ -54,19 +42,16 @@ export default {
 #app {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr 50px;
   grid-template-areas: 
     "header header header header header"
     "app-content app-content app-content app-content app-content"
-    ". app-footer app-footer app-footer ."
-    /*
-     "header header header header header"
-     "nav-menu app-content app-content app-content app-content"
-      ". app-footer app-footer app-footer ."
-     */
-  ;  
+    "app-footer app-footer app-footer app-footer app-footer";  
   font-family: 'Roboto', 'Trebuchet MS', 'Helvetica', 'Arial', sans-serif;
   background-color: rgb(20, 19, 19); 
   color: white;
+  overflow: auto;
+  padding: 15px 5px 5px 5px;
 }
 
 #header {
@@ -75,6 +60,7 @@ export default {
 
 #footer{
   grid-area: app-footer;
+  position: relative;
 
 }
 
@@ -142,9 +128,9 @@ a{
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div#content {
-  grid-area: app-content;
+  grid-area: 2 / 1 / 2 / 6;
   padding: 1px 16px;
-  height: 800px;
+  height: auto;
   background-size: cover;
   margin-top: 25px;
 }
@@ -152,13 +138,32 @@ div#content {
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
+  #app {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr 50px;
+  grid-template-areas: 
+    "header"
+    "app-content"
+    "app-footer"; 
+  overflow: scroll;
+  padding: 15px 5px 5px 5px;
+}
   #title {
     width: 100%;
     height: auto;
     position: relative;
   }
-  .menu a {float: left;}
-  div.content {margin-left: 0;}
+  .menu a {
+    float: left;
+    }
+ div#content {
+  grid-area: 2 / 1 / 2 / 1;
+  padding: 1px 16px;
+  height: auto;
+  background-size: cover;
+  margin-top: 25px;
+  overflow: scroll;
+}
 
   #title>h1 {
     font-size: 30px;

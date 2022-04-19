@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h2>Create New Collection</h2>
+      <p class="headingLabel">Create New Collection</p>
       <form class="new-collection" type="text" @submit.prevent="createCollection">
           <input class="collection-name" type="text" placeholder="Name" v-model='collection.collectionName' />
           <input class="public" type="checkbox" v-model='collection.private'/>Private?
@@ -51,5 +51,13 @@ export default {
 </script>
 
 <style>
+@media screen and (max-width: 700px) and (min-width: 400px){
+    .headingLabel{
+        font-size: 25px;
+    }
+}
+    .headingLabel{
+        font-size: 25px;
 
+    }
 </style>

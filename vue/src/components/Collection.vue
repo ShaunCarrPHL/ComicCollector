@@ -22,7 +22,7 @@
        <add-collection /> 
 
        <p class="sectionLabel">Collections</p>
-       <collection-link class="sectionLabel" v-for="collection in this.$store.state.collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
+       <collection-link class="comicLink" v-for="collection in this.$store.state.collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
       <!-- <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p> -->
       </div>
     </div>
@@ -203,11 +203,8 @@ export default {
     #comicList{
         font-size: 20px;
     }
-}
-
-@media screen and (min-width: 400px){
-    #main{
-        font-size: 5.9vw;
+    #comicLink{
+        font-size: 20px;
     }
 }
 
