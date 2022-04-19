@@ -2,7 +2,7 @@
   <div id="main">
       
       <div class="collection">
-        <h2>My "{{selectedCollection.collectionName}}" Collection</h2>
+        <p class="sectionLabel">My "{{selectedCollection.collectionName}}" Collection</p>
         <!--TODO: add v-for to iterate through comics for display-->
        <!--TODO: add dropdown menu to select collection for comic-->
         <table id="comicList">
@@ -21,8 +21,8 @@
       <div id="addCollection">
        <add-collection /> 
 
-       <h3>Collections</h3>
-       <collection-link v-for="collection in this.$store.state.collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
+       <p class="sectionLabel">Collections</p>
+       <collection-link class="sectionLabel" v-for="collection in this.$store.state.collections" v-bind:key="collection.collectionId" :collection="collection" v-on:selectedCollection="setActiveCollection"/>
       <!-- <p v-for='collection in collections' v-bind:key='collection.collectionName'>{{collection.collectionName}}</p> -->
       </div>
     </div>
@@ -188,6 +188,27 @@ export default {
 
 #comicList{
     justify-content: center;
+}
+
+@media screen and (max-width: 700px) and (min-width: 400px){
+    #main{
+        grid-template-areas:
+        "collection"
+        "addCollection";
+        grid-template-columns: 1fr;
+    }
+    .sectionLabel{
+        font-size: 25px;
+    }
+    #comicList{
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 400px){
+    #main{
+        font-size: 5.9vw;
+    }
 }
 
 </style>

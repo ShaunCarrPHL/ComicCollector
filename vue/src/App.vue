@@ -78,11 +78,6 @@ export default {
 
 }
 
-div#nav{
-  color: yellow;
-  font-size: 20px;
-}
-
 #title {
   grid-area: header ;
 
@@ -168,6 +163,11 @@ div#content {
   #title>h1 {
     font-size: 30px;
   }
+  .menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
@@ -175,12 +175,6 @@ div#content {
   .menu a {
     text-align: center;
     float: none;
-  }
-}
-
-@media screen and (max-height: 700px) {
-  #app {
-    
   }
 }
 
