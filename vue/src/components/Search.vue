@@ -10,9 +10,9 @@
         </div>
         <div id="parentDiv">
           <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
-            <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
-            <p id="description">{{comic.description}}</p>
-            <img id="image" v-bind:src="comic.imageURL" width="40" height="60">
+            <!-- <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
+            <p id="description">{{comic.description}}</p> -->
+            <img id="image" v-bind:src="comic.imageURL" width="60" height="75">
             <add-to-collection :selectedComic="comic"/>
         </div>
       </div>

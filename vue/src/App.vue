@@ -5,11 +5,11 @@
     
       <div class="menu">
         <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-        <router-link v-bind:to="{name: 'login'}"></router-link>
-        <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
         <router-link v-bind:to="{name: 'collection'}" v-if="$store.state.token != ''">Collection</router-link>
         <router-link v-bind:to="{name: 'contact'}">Contact</router-link>
         <router-link v-bind:to="{name: 'search'}">Search</router-link>
+         <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+        <router-link v-bind:to="{name: 'login'}"></router-link>
       </div>
     </div>
     
@@ -51,12 +51,12 @@ export default {
   background-color: rgb(20, 19, 19); 
   color: white;
   overflow: auto;
-  padding: 15px 5px 5px 5px;
+  padding: 2px 5px 5px 5px;
 }
 
-#header {
+/* #header {
   grid-area: header;
-}
+} */
 
 #footer{
   grid-area: app-footer;
@@ -65,24 +65,20 @@ export default {
 }
 
 #title {
-  grid-area: header ;
+  grid-area: header;
+  outline-width: 0px;
 
 }
 
 #maintitle{
-
-  
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 100px;
   font-family: 'Bangers', cursive;
-  /*height: 15vh;*/
-  /* padding-top: 10vh;*/
   border-radius: 25px;
   background: rgb(150, 9, 9);
-  padding: 20px;
-  /*max-width: 90vh;*/
+  padding: 20px; 
 }
 
 /*Fix the grid area of app*/
@@ -94,16 +90,10 @@ a{
 
 .menu {
   font-size: 1rem;
-  margin: 0;
-  padding: 0;
+ /*  margin: 0;
+  padding: 0; */
   width: 100%;
-  /* background-color: rgb(122, 119, 119); */
-  /* position: fixed; */
-  height: 50px;
-  /* overflow: auto; */
-  padding-bottom: 35px;
-  margin-bottom: 35px;
-  margin-top: 10px;
+  /* height: 50px; */
 
 }
 
