@@ -1,19 +1,19 @@
 <template>
   <div id="searchPage">
       <div id="search">
-       <input type="text" v-model="search" placeholder="Search" />
+       <input id="searchforreal" type="text" v-model="search" placeholder="Search" />
        
        <select v-model="searchCategory">
               <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
         </select>
         <button v-on:click="searchComics()">Search</button> 
+        </div>
         <div id="parentDiv">
           <div id ="listComics" v-for="comic in collectionComics" v-bind:key="comic.id" style="color: white;">
             <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
             <p id="description">{{comic.description}}</p>
             <img id="image" v-bind:src="comic.imageURL" width="40" height="60">
             <add-to-collection :selectedComic="comic"/>
-          </div>
         </div>
       </div>
   </div>
@@ -38,7 +38,7 @@ export default {
                 "Series",
                 "Character"
             ],
-            searchCategory: ""
+            searchCategory: "",  
         }
   },
   methods:{
@@ -173,6 +173,7 @@ export default {
 div#searchPage{
    display: grid;
    grid-template-columns: 1fr, 1fr, 1fr, 1fr, 1fr;
+   grid-template-rows: auto, 1fr, 50px;
    grid-template-areas: 
    "search search search search search"
    "parentDiv parentDiv parentDiv parentDiv parentDiv";
@@ -182,12 +183,18 @@ div#searchPage{
     border-radius: 25px;
     color: white;
     font-size: 20px;
+    overflow: scroll;
     
     
 }
 
+#search{
+  grid-area: search;
+  padding: 20px;
+}
+
 div#parentDiv{
-  grid-area: parentDiv;
+  grid-area: 2 / 1 / 2 /6 ;
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
@@ -195,17 +202,31 @@ div#parentDiv{
   height: 60vh;
 }
 div#listComics{
+  display: flex;
+  justify-content: space-around;
   font-size: 12px;
   outline: 5px dotted green;
 }
 
 
 
-@media screen and (max-height: 700px) {
+@media screen and (max-height: 700px) and (min-width: 400px) {
   
   #searchPage{
-
+    grid-template-areas:
+    "search"
+    "parentDiv";
+    grid-template-columns: 1fr;
+    overflow: scroll;
   }
+  div#parentDiv{
+  grid-area: 2 / 1 / 2 / 1 ;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  height: 60vh;
+}
 }
 
 </style>
