@@ -1,11 +1,13 @@
 package com.techelevator.services;
 
+import com.sun.jdi.IntegerValue;
 import com.techelevator.model.MarvelModel.MarvelComic;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.ResourceAccessException;
@@ -198,6 +200,7 @@ public class MarvelComicService {
             System.out.println(e.getMessage());
         }
         creatorId = Integer.valueOf(findCharacterOrCreatorId("\"id\"", creatorJsonString, 1));
+
         return creatorId;
     }
 
@@ -207,6 +210,7 @@ public class MarvelComicService {
         int beginIndexOfValue = indexOfId + id.length() + offset;
         String[] split = jsonString.substring(beginIndexOfValue).split(",");
         String isolatedId = split[0];
+        isolatedId = Integer.valueOf(isolatedId) > 0 ? isolatedId : "0";
         return isolatedId;
     }
 
