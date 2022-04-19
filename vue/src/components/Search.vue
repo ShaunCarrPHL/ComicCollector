@@ -212,10 +212,15 @@ div#parentDiv{
   height: 60vh;
 }
 div#listComics{
-  display: flex;
+  /* display: flex; */
   justify-content: space-around;
   font-size: 12px;
-  outline: 5px dotted green;
+  margin-bottom: 10px;
+  /* border: 10px inset rgba(128, 128, 128, 0.3); */
+  /* border-style: inset; */
+  /* background-color: rgba(36, 34, 34, 0.2) */
+  
+  
 }
 
 
