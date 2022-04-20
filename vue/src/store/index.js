@@ -25,7 +25,7 @@ export default new Vuex.Store({
       id: 0,
       title: '',
       author:'',
-      image:''
+      imageURL:''
     },
     collections: [],
     activeCollectionComics: []

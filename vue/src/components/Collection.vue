@@ -2,13 +2,13 @@
   <div id="main">
       
       <div class="collection">
-        <p class="sectionLabel">My "{{selectedCollection.collectionName}}" Collection</p>
+        <p class="sectionLabel" v-show="selectedCollection.collectionName">My {{selectedCollection.collectionName}} Collection</p>
         <!--TODO: add v-for to iterate through comics for display-->
        <!--TODO: add dropdown menu to select collection for comic-->
-        <table id="comicList">
+        <table id="comicList" v-show="selectedCollection.collectionName">
           <thead>
             <tr>
-                <th>Title</th>
+                <th>Comics</th>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +38,7 @@ import CollectionLink from './CollectionLink.vue'
 
 
 export default {
+    name: "collection",
     data() {
         return {
             collections: [],
@@ -98,15 +99,18 @@ export default {
            //insert them into the this.comics array
            ComicCollectionService.getComicsInCollection(this.$store.state.collection.id).then(response => {
                this.selectedCollection.getComicsInCollection.comics = response.data;
-            //    this.$store.commit('SET_COMICS', response.data)
+               this.$store.commit('SET_ACTIVE_COLLECTION_COMICS', response.data)
            });
        },
        loadCollections(){
-           //Pulling in all collections owned by the user
-           ComicCollectionService.getCollections(this.$store.state.user.id).then(response => {
-               this.collections = response.data;
-               this.$store.commit("SET_COLLECTIONS", response.data)
-           });
+
+        ComicCollectionService.getCollections(this.$store.state.user.id)
+              .then(updatedCollections => {
+                this.$store.commit('SET_COLLECTIONS', updatedCollections.data);
+                this.collections = this.$store.state.collections;
+              }
+            
+              );
 
        },
        setActiveCollection(collection){
@@ -137,9 +141,7 @@ export default {
             }
 
             return filtered;
-        //    return this.comics.filter(comic => {
-        //        return comic.author.toLowerCase().indexOf(this.search.toLowerCase()) != -1;
-        //    });
+
        },
        comicsInCollection(){
            return this.$store.state.activeCollectionComics;

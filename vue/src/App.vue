@@ -52,6 +52,7 @@ export default {
   color: white;
   overflow: auto;
   padding: 2px 5px 5px 5px;
+  
 }
 
 /* #header {
@@ -123,6 +124,7 @@ div#content {
   height: auto;
   background-size: cover;
   margin-top: 25px;
+  min-height: 60vh;
 }
 
 
