@@ -202,6 +202,7 @@ export default {
   padding: 25px;
   margin: 25px;
   overflow: scroll;
+  overflow-x:hidden;
 }
 .addCollection {
   grid-area: addCollection;
