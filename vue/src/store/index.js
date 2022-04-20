@@ -28,7 +28,8 @@ export default new Vuex.Store({
       imageURL:''
     },
     collections: [],
-    activeCollectionComics: []
+    activeCollectionComics: [],
+    activeCollectionId: 0
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
