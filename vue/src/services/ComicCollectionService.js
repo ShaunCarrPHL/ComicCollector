@@ -38,7 +38,7 @@ export default{
     },
 
     addComicToCollection(collectionId, comic){
-        console.log(collectionId);
+        console.log(comic);
         return http.post(`/collection/comic/${collectionId}`, comic);
     },
     getComicsInCollection(collectionId){

@@ -5,18 +5,13 @@
         <p class="sectionLabel" v-show="selectedCollection.collectionName">My {{selectedCollection.collectionName}} Collection</p>
         <!--TODO: add v-for to iterate through comics for display-->
        <!--TODO: add dropdown menu to select collection for comic-->
-        <table id="comicList" v-show="selectedCollection.collectionName">
-          <thead>
-            <tr>
-                <th>Comics</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr v-for='comic in comicsInCollection' v-bind:key='comic.comicTitle'>
-                  <td>{{comic.comicTitle}}</td>
-              </tr>
-          </tbody>
-      </table>
+        <ul id="comicList" v-show="selectedCollection.collectionName">
+                <li>Comics</li>
+              <li v-for='comic in comicsInCollection' v-bind:key='comic.id'
+                   :title="comic.comicTitle">
+                    <img class="comicCover" v-bind:src="comic.imageURL">
+              </li>
+      </ul>
       </div>
       <div id="addCollection">
        <add-collection /> 
@@ -58,23 +53,6 @@ export default {
                 }
             ],
             comics: [ 
-                /*  {
-                     comicTitle: "Marvelous Marvel",
-                     marvelId: 111,
-                     comicId: 123,
-                     author: "Neil Armstrong",
-                     imageURL: "http://i.annihil.us/u/prod/marvel/i/mg/c/60/4bc69f11baf75/portrait_uncanny.jpg",
-                     releaseDate: "09/23/1997",
-                     description: "A marvel of the human experience! And the struggles of confusing tax brackets! Find out!! Now!!!"
-                 },
-                 {
-                     comicTitle: "The Amazing Spider-Man #1",
-                     author: "Stan Lee"
-                 },
-                 {
-                     comicTitle: "The Fantastic Four #4",
-                     author: "Jack Kirby"
-                 } */
             ],
             selectedCollection: "",
             search: "",
@@ -179,6 +157,7 @@ export default {
     grid-area: collection;
     padding: 25px;
     margin: 25px;
+    overflow: scroll;
     
 }
  .addCollection{
@@ -190,7 +169,19 @@ export default {
 
 #comicList{
     justify-content: center;
+    list-style: none;
+    
 }
+
+ .comicCover{
+     
+    /* display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    align-items: flex-end; */
+    max-height: 500px;
+
+} 
 
 @media screen and (max-width: 700px) and (min-width: 400px){
     #main{
@@ -198,6 +189,7 @@ export default {
         "collection"
         "addCollection";
         grid-template-columns: 1fr;
+        overflow: scroll;
     }
     .sectionLabel{
         font-size: 25px;
@@ -208,6 +200,20 @@ export default {
     #comicLink{
         font-size: 20px;
     }
+    .collection{
+    
+    grid-area: collection;
+    padding: 25px;
+    margin: 25px;
+    overflow: scroll;
+    
+}
+ .addCollection{
+    
+    grid-area: addCollection;
+    padding: 25px;
+    margin: 25px;
+}
 }
 
 </style>

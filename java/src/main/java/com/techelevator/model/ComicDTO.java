@@ -3,7 +3,7 @@ package com.techelevator.model;
 public class ComicDTO {
     private int marvelId;
     private  String comicTitle;
-    private String imageUrl;
+    private String imageURL;
     private String description;
     private int collectionId;
 
@@ -15,8 +15,8 @@ public class ComicDTO {
         return comicTitle;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
     public String getDescription() {
@@ -35,8 +35,8 @@ public class ComicDTO {
         this.comicTitle = comicTitle;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public void setDescription(String description) {
@@ -52,7 +52,7 @@ public class ComicDTO {
         return "ComicDTO{" +
                 "marvelId='" + marvelId + '\'' +
                 ", comicTitle=" + comicTitle + '\'' +
-                ", imageURL=" + imageUrl + '\'' +
+                ", imageURL=" + imageURL + '\'' +
                 ", description=" + description + '\'' +
                 ", collectionId=" + collectionId + '\'' +
                 '}';

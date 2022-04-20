@@ -14,8 +14,6 @@
            
             :title="comic.comicTitle"
             style="color: white;">
-            <!-- <h3 id="headerTitle">Title: {{comic.comicTitle}}</h3>
-            <p id="description">{{comic.description}}</p> -->
 
             <img class="comicCover" v-bind:src="comic.imageURL">
 
@@ -216,9 +214,9 @@ div#listComics{
   justify-content: space-around;
   font-size: 12px;
   margin-bottom: 10px;
-  /* border: 10px inset rgba(128, 128, 128, 0.3); */
-  /* border-style: inset; */
-  /* background-color: rgba(36, 34, 34, 0.2) */
+  border: 10px inset rgba(128, 128, 128, 0.3);
+  border-style: inset;
+  background-color: rgba(36, 34, 34, 0.2);
   
   
 }

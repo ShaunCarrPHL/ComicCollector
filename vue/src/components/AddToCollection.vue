@@ -4,7 +4,7 @@
       <option
         class="optionLabel"
         v-for="collection in availableCollections"
-        v-bind:key="collection.collectionName"
+        v-bind:key="collection.collectionId"
         :value="collection"
       >
         {{ collection.collectionName }}
