@@ -7,6 +7,8 @@
               <option v-for="category in searchCategories" v-bind:key="category" :value="category">{{category}}</option>
         </select>
         <button v-on:click="searchComics()">Search</button> 
+        <button v-on:click="newThisWeek()">New This Week</button>
+        <button v-on:click="newNextWeek()">Coming Next Week</button>
         </div>
         <div id="parentDiv">
           <div id ="listComics" v-for="comic in collectionComics" 
@@ -41,12 +43,66 @@ export default {
                 "Title",
                 "Author",
                 "Series",
-                "Character"
+                "Character",
+                "newThisWeek",
+                "newNextWeek"
             ],
             searchCategory: "",  
         }
   },
   methods:{
+    newThisWeek(){
+      {  this.searchCategory = "newThisWeek";
+           ComicCollectionService.getComicsNewThisWeek(this.search).then(response=>{
+             this.$store.commit("SET_COMICS", response.data)
+             console.log(response.data);
+           }).catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log("Response Error");
+              console.log(error.response.data);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log("Request Error");
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Misc Error");
+              console.log('Error', error.message);
+            }
+          });
+         
+         
+          
+         }
+
+       },
+       newNextWeek(){
+      {  this.searchCategory = "newNextWeek";
+           ComicCollectionService.getComicsNewNextWeek(this.search).then(response=>{
+             this.$store.commit("SET_COMICS", response.data)
+             console.log(response.data);
+           }).catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log("Response Error");
+              console.log(error.response.data);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log("Request Error");
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Misc Error");
+              console.log('Error', error.message);
+            }
+          });
+         
+         
+          
+         }
+
+       },
 
     searchComics(){
         if(this.searchCategory === "Character"){

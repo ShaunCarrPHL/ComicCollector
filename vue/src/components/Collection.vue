@@ -213,6 +213,7 @@ export default {
 #comicList {
   justify-content: center;
   list-style: none;
+  text-decoration: underline;
 }
 
 .comicCover {

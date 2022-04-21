@@ -43,5 +43,12 @@ export default{
     },
     getComicsInCollection(collectionId){
         return http.get(`/collection/mycollection/mycomics/${collectionId}`);
+    },
+
+    getComicsNewThisWeek(thisWeek){
+        return http.get(`/comics/date/thisWeek/${thisWeek}`);
+    },
+    getComicsNewNextWeek(nextWeek){
+        return http.get(`/comics/date/nextWeek${nextWeek}`);
     }
 }
