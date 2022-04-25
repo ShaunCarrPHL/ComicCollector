@@ -8,7 +8,7 @@
         </select>
         <button v-on:click="searchComics()">Search</button> 
         <button v-on:click="newThisWeek()">New This Week</button>
-        <button v-on:click="newNextWeek()">Coming Next Week</button>
+        <button v-on:click="newNextWeek()">Coming Soon</button>
         </div>
         <div id="parentDiv">
           <div id ="listComics" v-for="comic in collectionComics" 
@@ -44,15 +44,15 @@ export default {
                 "Author",
                 "Series",
                 "Character",
-                "newThisWeek",
-                "newNextWeek"
+                "Brand New",
+                "Coming Soon"
             ],
             searchCategory: "",  
         }
   },
   methods:{
     newThisWeek(){
-      {  this.searchCategory = "newThisWeek";
+      {  this.searchCategory = "Brand New";
            ComicCollectionService.getComicsNewThisWeek(this.search).then(response=>{
              this.$store.commit("SET_COMICS", response.data)
              console.log(response.data);
@@ -78,7 +78,7 @@ export default {
 
        },
        newNextWeek(){
-      {  this.searchCategory = "newNextWeek";
+      {  this.searchCategory = "Coming Soon";
            ComicCollectionService.getComicsNewNextWeek(this.search).then(response=>{
              this.$store.commit("SET_COMICS", response.data)
              console.log(response.data);
